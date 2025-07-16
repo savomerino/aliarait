@@ -1,0 +1,376 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+  background: #1d1d1b;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+video {
+  display: block;
+  width: 100vw;
+  height: auto;
+  max-width: 100vw;
+  background: #1d1d1b;
+}
+
+.vertical-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: 100vh;
+  min-width: 100vw;
+  object-fit: cover;
+  max-width: none;
+  max-height: 100vh;
+  transform: translate(-50%, -50%);
+  overflow-x: auto;
+}
+
+#bgvid {
+    position: fixed; /* O 'absolute' si el contenedor padre llena el viewport y es 'relative' */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ancho completo del viewport */
+    height: 100dvh; /* Alto completo del viewport */
+    object-fit: cover; /* Clave para cubrir manteniendo aspect ratio, recortando si es necesario */
+    z-index: -1; /* Para asegurar que esté detrás de otros contenidos */
+}
+
+#aliaraVideo {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100dvh;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.overlay-content {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.contact-form {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    border-radius: 1rem;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.2);
+    padding: 2rem 2.5rem;
+    max-width: 400px;
+    width: 90vw;
+    pointer-events: auto;
+}
+
+.contact-form h2 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.contact-form div {
+    margin-bottom: 15px;
+}
+
+.contact-form label {
+    display: block;
+    color: #f0f0f0;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.contact-form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.cta-button {
+    background-color: #007bff; /* Color primario de ejemplo */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.cta-button:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+}
+
+.cta-button,
+.contact-form button[type="submit"].btn,
+.contact-form button[type="submit"].btn-primary {
+    background-color: #efbe3d !important;
+    color: #1d1d1b !important;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    transition: background-color 0.2s;
+}
+
+.cta-button:hover,
+.contact-form button[type="submit"].btn:hover,
+.contact-form button[type="submit"].btn-primary:hover {
+    background-color: #e7a042 !important;
+    color: #1d1d1b !important;
+}
+
+.cta-button:active,
+.contact-form button[type="submit"].btn:active,
+.contact-form button[type="submit"].btn-primary:active {
+    background-color: #e65f3c !important;
+    color: #fff !important;
+}
+
+.phone-link {
+    margin-top: 1.5rem;
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    pointer-events: auto;
+}
+
+.phone-link:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.aliara-logo {
+    width: 300px;
+    height: 300px;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+    background: none;
+    /* Quitar box-shadow, usar filter: drop-shadow para el SVG */
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.25));
+    border-radius: 1rem;
+    padding: 1rem;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    animation: none;
+}
+
+/* Glitch keyframes */
+@keyframes glitch {
+    0% { filter: none; transform: none; }
+    2% { filter: contrast(2) brightness(1.5) hue-rotate(10deg); transform: translate(-2px, 2px) skewX(-2deg); }
+    4% { filter: contrast(1.5) brightness(1.2) hue-rotate(-10deg); transform: translate(2px, -1px) skewX(2deg); }
+    6% { filter: none; transform: none; }
+    100% { filter: none; transform: none; }
+}
+
+/* Glitch pseudo-element for color split */
+.aliara-logo.glitch::after,
+.aliara-logo.glitch::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.7;
+    background: none;
+}
+
+.aliara-logo.glitch::before {
+    filter: blur(1px) drop-shadow(-2px 0 0 #00fff9);
+    mix-blend-mode: lighten;
+}
+
+.aliara-logo.glitch::after {
+    filter: blur(1px) drop-shadow(2px 0 0 #ff00c8);
+    mix-blend-mode: lighten;
+}
+
+/* Solo mostrar pseudo-elementos durante el glitch */
+.aliara-logo.glitch::before,
+.aliara-logo.glitch::after {
+    animation: glitch-pseudo 5s infinite steps(1, end);
+    opacity: 0;
+}
+.aliara-logo.glitch.active::before,
+.aliara-logo.glitch.active::after {
+    opacity: 1;
+}
+
+@keyframes glitch-pseudo {
+    0%, 97%, 100% { opacity: 0; }
+    2%, 4% { opacity: 1; }
+    6% { opacity: 0; }
+}
+
+/* Media queries conservan el tamaño reducido en móvil */
+@media (max-width: 991.98px) {
+    .aliara-logo {
+        width: 180px;
+        height: 180px;
+        padding: 0.5rem;
+    }
+
+    .contact-form textarea#message {
+        min-height: 80px;
+        grid-row: 1;
+    }
+}
+
+@media (max-width: 768px) {
+   .contact-form {
+        padding: 20px;
+        max-width: 90%; /* Ocupa más ancho en móviles */
+    }
+
+   .contact-form h2 {
+        font-size: 1.5em;
+    }
+
+   .cta-button,
+   .phone-link {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+    
+    /* Ajustes adicionales de tamaño de fuente o espaciado si son necesarios */
+   .main-headline { /* Si se añade un titular principal */
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+   .overlay-content {
+        justify-content: flex-start; /* Alinear al inicio en pantallas muy pequeñas */
+        padding-top: 5vh; /* Más espacio arriba */
+    }
+   .contact-form h2 {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 576px) {
+    .contact-form {
+        padding: 1.2rem 0.8rem;
+        max-width: 95vw;
+    }
+}
+
+/* Landscape mobile: agrupa nombre y email en una fila, mensaje en una sola línea */
+@media (max-width: 991.98px) and (orientation: landscape) and (max-height: 500px) {
+  .contact-form .mb-3 {
+    margin-bottom: 6px;
+  }
+  .contact-form .row-landscape {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 4px; /* Reduce espacio debajo de nombre/email */
+  }
+  .contact-form .mb-3:last-of-type {
+    margin-bottom: 10px; /* Espacio solo debajo del mensaje si es necesario */
+  }
+  .contact-form .row-landscape > div {
+    flex: 1 1 0;
+    margin-bottom: 0;
+  }
+  .contact-form input[type="text"],
+  .contact-form input[type="email"] {
+    min-height: 38px;
+    max-height: 38px;
+    height: 38px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 1em;
+  }
+  .contact-form textarea#message {
+    min-height: 38px;
+    max-height: 38px;
+    resize: none;
+    line-height: 1.2;
+  }
+}
+
+/* Usa 100dvh para altura real del viewport en todos los elementos principales */
+html, body {
+    height: 100dvh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+}
+
+/* Video de fondo ocupa el alto dinámico */
+#bgvid,
+#aliaraVideo {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100dvh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Overlay ocupa el alto dinámico */
+.overlay-content {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Ajuste para el contenedor Bootstrap interno */
+.container-fluid.h-100 {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+}
