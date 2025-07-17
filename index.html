@@ -1,70 +1,573 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aliara It - Soluciones Innovadoras</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Aliara IT - Soluciones en Redes, Servidores y Soporte</title>
+  <meta content="Especialistas en Gestión de Redes (Ubiquiti, Cableado, Racks), Servidores, Seguridad Informática y Soporte Técnico de Hardware y Software." name="description">
+  <meta content="aliara, it, soporte tecnico, redes, ubiquiti, servidores, seguridad informatica, hardware, software, cableado estructurado, rack" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
 </head>
-<body>
-    <video id="aliaraVideo" autoplay muted playsinline loop poster="path/to/poster-image.jpg">
-        <source id="videoSource" src="assets/aliaraIT_back_Web.mp4" type="video/mp4">
-        Tu navegador no soporta la reproducción de video.
-    </video>
 
-    <div class="overlay-content">
-        <div class="container-fluid h-100">
-            <div class="row h-100 align-items-center justify-content-center flex-column flex-md-row">
-                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
-                    <img src="assets/aliarait.svg" alt="Aliara IT Logo" class="aliara-logo">
-                </div>
-                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
-                    <form
-    id="contactForm"
-    class="contact-form needs-validation"
-    action="https://formspree.io/f/mblyoqyl"
-    method="POST"
-    novalidate
->
-    <h2 class="text-center mb-4 text-white">Dejanos tu consulta</h2>
-    <div class="row-landscape">
-        <div class="mb-3">
-            <label for="name" class="form-label text-white">Nombre:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-            <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label text-white">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-            <div class="invalid-feedback">Por favor, ingresa un email válido.</div>
-        </div>
-    </div>
-    <div class="mb-3">
-        <label for="message" class="form-label text-white">Mensaje:</label>
-        <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
-        <div class="invalid-feedback">Por favor, ingresa tu mensaje.</div>
-    </div>
-    <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
-        <button type="button" id="whatsappBtn" class="btn btn-success" title="Enviar por WhatsApp">
-            <img src="assets/whatsapp.svg" alt="WhatsApp" width="24" height="24" style="filter: brightness(0) invert(1);" />
-        </button>
-    </div>
-</form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    <a href="tel:+NUMEROACTUAL" class="phone-link mt-3">Llámanos: +XX (XXX) XXX-XXXX</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<body class="index-page">
 
-    <!-- Bootstrap JS (opcional, para validación) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts.js"></script>
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/web_logo.webp" alt="Aliara IT Logo" style="height:40px;">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Inicio</a></li>
+          <li><a href="#about">Nosotros</a></li>
+          <li><a href="#services">Servicios</a></li>
+          <li><a href="#portfolio">Proyectos</a></li>
+          <li><a href="#team">Equipo</a></li>
+          <li><a href="#contact">Contacto</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="#contact">Contáctanos</a>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="zoom-out">
+            <h1>Somos tu Aliado Tecnológico de Confianza</h1>
+            <p>Soluciones expertas en Redes, Servidores, Seguridad y Soporte Técnico para garantizar la continuidad de tu negocio.</p>
+            <div class="d-flex">
+              <a href="#services" class="btn-get-started">Nuestros Servicios</a>
+              <a href="assets/vd/aliaraIT_back_Web.mp4" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Video Institucional</span></a>
+            </div>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
+            <img src="assets/img/hero-img.png" class="img-fluid animated" alt="Imagen Hero de Aliara IT">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section id="clients" class="clients section light-background">
+      <div class="container" data-aos="zoom-in">
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": { "delay": 5000 },
+              "slidesPerView": "auto",
+              "pagination": { "el": ".swiper-pagination", "type": "bullets", "clickable": true },
+              "breakpoints": {
+                "320": { "slidesPerView": 2, "spaceBetween": 40 },
+                "480": { "slidesPerView": 3, "spaceBetween": 60 },
+                "640": { "slidesPerView": 4, "spaceBetween": 80 },
+                "992": { "slidesPerView": 6, "spaceBetween": 120 }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"><img src="assets/img/clients/clients-1.webp" class="img-fluid" alt="Logo Cliente 1"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/clients-2.webp" class="img-fluid" alt="Logo Cliente 2"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/clients-3.webp" class="img-fluid" alt="Logo Cliente 3"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/clients-4.webp" class="img-fluid" alt="Logo Cliente 4"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/clients-5.webp" class="img-fluid" alt="Logo Cliente 5"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/clients-6.webp" class="img-fluid" alt="Logo Cliente 6"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/clients-7.webp" class="img-fluid" alt="Logo Cliente 7"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/clients-8.webp" class="img-fluid" alt="Logo Cliente 8"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nosotros</h2>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <h3>Nacimos de la idea de unir, vincular y potenciar</h3>
+            <p>
+              En Aliara IT, nuestro nombre define nuestra filosofía. Deriva del latín "alligare" (unir, vincular), y expresa nuestro compromiso de ser el socio estratégico que tu empresa necesita para crecer.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i><span><strong>Misión:</strong> Proveer soluciones expertas en redes, servidores, seguridad y soporte, asegurando la máxima eficiencia y continuidad operativa.</span></li>
+              <li><i class="bi bi-check-circle-fill"></i><span><strong>Visión:</strong> Ser los referentes en infraestructura IT, reconocidos por nuestra confiabilidad, conocimiento técnico y compromiso con el éxito de nuestros clientes.</span></li>
+              <li><i class="bi bi-check-circle-fill"></i><span><strong>Valores:</strong> Compromiso, Confianza, Crecimiento Colaborativo y Cercanía.</span></li>
+            </ul>
+          </div>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <p>No solo proveemos tecnología; forjamos alianzas para potenciar tu infraestructura, prevenir problemas y mejorar la eficiencia operativa. Más que proveedores, somos tu equipo extendido de expertos en IT, dedicados a entender tus desafíos y convertirlos en oportunidades.</p>
+            <a href="#contact" class="read-more"><span>Hablemos de tu Proyecto</span><i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us" class="section why-us light-background">
+      <div class="container-fluid">
+        <div class="row gy-4">
+          <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
+            <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
+              <h3>¿Por Qué Elegir Aliara IT?</h3>
+              <p>
+                Porque no solo resolvemos problemas, los anticipamos. Nuestro enfoque proactivo y nuestro compromiso con la excelencia nos convierten en el socio tecnológico que tu empresa necesita para operar sin interrupciones y crecer de forma segura.
+              </p>
+            </div>
+            <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
+              <div class="faq-item faq-active">
+                <h3><span>01</span> ¿Cómo gestionan las redes y qué tecnologías usan?</h3>
+                <div class="faq-content">
+                  <p>Nos especializamos en el diseño e implementación de redes de alto rendimiento, utilizando principalmente tecnología Ubiquiti. Realizamos cableado estructurado profesional y organización de racks para garantizar una red ordenada, escalable y fácil de mantener.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+              <div class="faq-item">
+                <h3><span>02</span> ¿Qué tipo de soluciones de seguridad informática ofrecen?</h3>
+                <div class="faq-content">
+                  <p>Implementamos una estrategia de seguridad integral que incluye firewalls de última generación, sistemas de antivirus centralizados, y la creación de políticas de seguridad robustas para proteger los datos y la infraestructura de tu empresa contra todo tipo de amenazas.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+              <div class="faq-item">
+                <h3><span>03</span> ¿Qué abarca el servicio de Soporte Técnico?</h3>
+                <div class="faq-content">
+                  <p>Nuestro soporte técnico cubre todas las necesidades de tu empresa, tanto a nivel de hardware (reparación y mantenimiento de equipos) como de software (resolución de problemas de sistema operativo, aplicaciones, etc.). Brindamos asistencia remota y presencial para minimizar el tiempo de inactividad.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 order-1 order-lg-2 why-us-img">
+            <img src="assets/img/why-us.png" class="img-fluid" alt="Por qué elegir Aliara IT" data-aos="zoom-in" data-aos-delay="100">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row">
+          <div class="col-lg-6 d-flex align-items-center">
+            <img src="assets/img/illustration/illustration-10.webp" class="img-fluid" alt="Habilidades de Aliara IT">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 content">
+            <h3>Nuestras Capacidades a tu Servicio</h3>
+            <p>
+              Contamos con un equipo de especialistas certificados y con amplia experiencia en las áreas críticas que tu empresa necesita para operar con éxito en el entorno digital actual.
+            </p>
+            <div class="skills-content skills-animation">
+              <div class="progress">
+                <span class="skill"><span>Gestión de Redes (Ubiquiti, Cableado, Racks)</span> <i class="val">100%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="progress">
+                <span class="skill"><span>Administración de Servidores</span> <i class="val">95%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="progress">
+                <span class="skill"><span>Seguridad Informática</span> <i class="val">90%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="progress">
+                <span class="skill"><span>Soporte Técnico (Hardware & Software)</span> <i class="val">100%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services section light-background">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Servicios Especializados</h2>
+        <p>Soluciones integrales para construir y mantener una infraestructura tecnológica sólida, segura y eficiente.</p>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-diagram-3"></i></div>
+              <h4><a href="#" class="stretched-link">Gestión de Redes</a></h4>
+              <p>Diseño e implementación de redes robustas. Expertos en Ubiquiti, cableado estructurado y organización de racks.</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-server"></i></div>
+              <h4><a href="#" class="stretched-link">Servidores</a></h4>
+              <p>Instalación, configuración y mantenimiento de servidores físicos y virtuales para un rendimiento óptimo y seguro.</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-shield-lock"></i></div>
+              <h4><a href="#" class="stretched-link">Seguridad Informática</a></h4>
+              <p>Protegemos tus activos digitales con soluciones de firewall, antivirus y políticas de seguridad a medida.</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-tools"></i></div>
+              <h4><a href="#" class="stretched-link">Soporte Técnico</a></h4>
+              <p>Asistencia especializada en hardware y software para resolver cualquier incidencia y garantizar la continuidad operativa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call To Action Section -->
+    <section id="call-to-action" class="call-to-action section dark-background">
+      <img src="assets/img/bg/bg-8.webp" alt="">
+      <div class="container">
+        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-xl-9 text-center text-xl-start">
+            <h3>¿Listo para optimizar tu infraestructura IT?</h3>
+            <p>Hablemos de tus desafíos y objetivos. Analizamos tus necesidades y te ofrecemos un plan de acción a medida, sin compromiso. Es hora de convertir tu infraestructura tecnológica en una ventaja competitiva.</p>
+          </div>
+          <div class="col-xl-3 cta-btn-container text-center">
+            <a class="cta-btn align-middle" href="#contact">Solicitar una Consultoría</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section 
+    <section id="portfolio" class="portfolio section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nuestros Proyectos</h2>
+        <p>Explorá algunos de nuestros trabajos que demuestran nuestra capacidad para entregar resultados de alta calidad en diferentes áreas.</p>
+      </div>
+      <div class="container">
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">Todos</li>
+            <li data-filter=".filter-app">Redes</li>
+            <li data-filter=".filter-product">Servidores</li>
+            <li data-filter=".filter-branding">Seguridad</li>
+            <li data-filter=".filter-books">Soporte</li>
+          </ul>
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="assets/img/portfolio/portfolio-portrait-1.webp" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Red Corporativa para Oficinas</h4>
+                <p>Instalación de red Ubiquiti y cableado estructurado.</p>
+                <a href="assets/img/portfolio/portfolio-portrait-1.webp" title="Red Corporativa" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Más Detalles" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="assets/img/portfolio/portfolio-1.webp" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Implementación de Servidor Local</h4>
+                <p>Configuración de servidor para base de datos y archivos.</p>
+                <a href="assets/img/portfolio/portfolio-1.webp" title="Servidor Local" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Más Detalles" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="assets/img/portfolio/portfolio-3.webp" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Fortalecimiento de Perímetro</h4>
+                <p>Instalación de Firewall y políticas de acceso.</p>
+                <a href="assets/img/portfolio/portfolio-3.webp" title="Seguridad Perimetral" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Más Detalles" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+              <img src="assets/img/portfolio/portfolio-4.webp" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Plan de Mantenimiento</h4>
+                <p>Contrato de soporte y mantenimiento para empresa.</p>
+                <a href="assets/img/portfolio/portfolio-4.webp" title="Plan de Mantenimiento" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Más Detalles" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+portfolio section nule-->
+    <!-- Team Section 
+    <section id="team" class="team section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nuestro Equipo</h2>
+        <p>Conocé a los profesionales apasionados y dedicados que están detrás de cada solución exitosa en Aliara IT.</p>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic"><img src="assets/img/person/person-m-7.webp" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Juan Pérez</h4>
+                <span>Director de Operaciones</span>
+                <p>Liderando con visión y estrategia cada proyecto de infraestructura.</p>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic"><img src="assets/img/person/person-f-8.webp" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Ana García</h4>
+                <span>Ingeniera de Redes y Seguridad Sr.</span>
+                <p>Garantizando la conectividad y la protección de tu red.</p>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic"><img src="assets/img/person/person-m-6.webp" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Carlos Rodriguez</h4>
+                <span>Especialista en Soporte Técnico</span>
+                <p>Soluciones rápidas y efectivas para hardware y software.</p>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic"><img src="assets/img/person/person-f-4.webp" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Laura Martinez</h4>
+                <span>Administradora de Servidores</span>
+                <p>Asegurando el rendimiento y la disponibilidad de los servidores.</p>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+team section nule-->
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contacto</h2>
+        <p>¿Tenés alguna pregunta o necesitás una solución a medida? No dudes en contactarnos. Estamos aquí para ayudarte.</p>
+      </div>
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4">
+          <div class="col-lg-5">
+            <div class="info-wrap">
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Ubicación</h3>
+                  <p>Resistencia, Chaco, Argentina</p>
+                </div>
+              </div>
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Teléfono</h3>
+                  <p>+54 362 4122191</p>
+                </div>
+              </div>
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email</h3>
+                  <p>info@aliarait.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7 d-flex align-items-center">
+            <form
+              id="contactForm"
+              class="php-email-form needs-validation w-100"
+              action="https://formspree.io/f/mblyoqyl"
+              method="POST"
+              novalidate
+            >
+              <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="name" class="form-label">Nombre:</label>
+                  <input type="text" name="name" class="form-control" id="name" required>
+                  <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="email" class="form-label">Email:</label>
+                  <input type="email" class="form-control" name="email" id="email" required>
+                  <div class="invalid-feedback">Por favor, ingresa un email válido.</div>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="message" class="form-label">Mensaje:</label>
+                <textarea class="form-control" name="message" id="message" rows="4" required></textarea>
+                <div class="invalid-feedback">Por favor, ingresa tu mensaje.</div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
+                <button type="button" id="whatsappBtn" class="btn btn-success" title="Enviar por WhatsApp">
+                  <img src="assets/whatsapp.svg" alt="WhatsApp" width="24" height="24" style="filter: brightness(0) invert(1);" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-6">
+            <h4>Suscribite a Nuestro Newsletter</h4>
+            <p>Recibí las últimas noticias, artículos y recursos sobre tecnología y seguridad directamente en tu correo.</p>
+            <form action="forms/newsletter.php" method="post" class="php-email-form">
+              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Suscribirse"></div>
+              <div class="loading">Cargando</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Tu suscripción ha sido recibida. ¡Gracias!</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="d-flex align-items-center">
+            <img src="assets/img/web_logo.webp" alt="Aliara IT Logo" style="height:40px;">
+          </a>
+          <div class="footer-contact pt-3">
+            <h3>Ubicación</h3>
+            <p>Resistencia, Chaco, Argentina</p>
+            <h3>Teléfono</h3>
+            <p>+54 362 4122191</p>
+            <p><strong>Email:</strong> <span>info@aliarait.com</span></p>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Enlaces Rápidos</h4>
+          <ul>
+            <li><a href="#hero">Inicio</a></li>
+            <li><a href="#about">Nosotros</a></li>
+            <li><a href="#services">Servicios</a></li>
+            <li><a href="#">Términos de servicio</a></li>
+            <li><a href="#">Política de privacidad</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Nuestros Servicios</h4>
+          <ul>
+            <li><a href="#services">Gestión de Redes</a></li>
+            <li><a href="#services">Servidores</a></li>
+            <li><a href="#services">Seguridad Informática</a></li>
+            <li><a href="#services">Soporte Técnico</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <h4>Seguinos</h4>
+          <p>Seguinos en nuestras redes sociales para estar al día con las novedades y consejos de tecnología.</p>
+          <div class="social-links d-flex">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Aliara IT</strong> <span>Todos los Derechos Reservados</span></p>
+      <div class="credits">
+        Diseñado por <a href="https://bulgaria.ar/">Bulgaria</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <!-- contacto JS File -->
+  <script src="assets/js/contact.js"></script>
+
 </body>
+
 </html>

@@ -1,0 +1,2925 @@
+/* Fonts */
+:root {
+  --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Jost",  sans-serif;
+  --nav-font: "Poppins",  sans-serif;
+}
+
+/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+:root {
+  --background-color: #1d1d1b; /* Fondo principal oscuro */
+  --surface-color: #3f3f3f;    /* Color de superficie para tarjetas y bloques (gris oscuro) */
+  --default-color: #ffffff;    /* Color de texto por defecto (blanco) */
+  --heading-color: #ffffff;    /* Color para títulos (blanco) */
+  --accent-color: #e7a042;     /* Color de acento principal para enlaces y botones (naranja) */
+  --accent-color-hover: #efbe3d; /* Color para el estado hover (dorado) */
+  --special-accent-color: #e65f3c; /* Color de acento especial para llamados a la acción (naranja rojizo) */
+}
+
+/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+:root {
+  --nav-color: rgba(255, 255, 255, 0.7); /* The default color of the main navmenu links */
+  --nav-hover-color: #e7a042; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #1d1d1b; /* Used as the background color for mobile navigation menu */
+  --nav-dropdown-background-color: #1d1d1b; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: rgba(255, 255, 255, 0.7); /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #efbe3d; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+}
+
+/* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+
+.light-background {
+  --background-color: #f5f6f8; /* Mantengo el original para un preset claro opcional */
+  --surface-color: #ffffff;
+}
+
+.dark-background {
+  --background-color: #1d1d1b; /* Fondo principal oscuro */
+  --default-color: #ffffff;    /* Texto por defecto */
+  --heading-color: #ffffff;    /* Color de títulos */
+  --surface-color: #3f3f3f;    /* Color de superficie (gris oscuro) */
+  --contrast-color: #ffffff;  /* Color de contraste */
+}
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
+
+/*--------------------------------------------------------------
+# General Styling & Shared Classes
+--------------------------------------------------------------*/
+body {
+  color: #ffffff; /* Color de texto por defecto (blanco) */
+  background-color: #1d1d1b; /* Fondo principal oscuro */
+  font-family: var(--default-font); /* Asegúrate de que esta variable esté definida en :root */
+}
+
+a {
+  color: #e7a042; /* Color de acento principal (naranja) */
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: #efbe3d; /* Color de acento para hover (dorado) */
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff; /* Color para títulos (blanco) */
+  font-family: var(--heading-font); /* Asegúrate de que esta variable esté definida en :root */
+}
+
+/* PHP Email Form Messages
+------------------------------*/
+.php-email-form .error-message {
+  display: none;
+  background: #e65f3c; /* Color de acento especial (naranja rojizo) para errores */
+  color: #ffffff;
+  text-align: left;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.php-email-form .sent-message {
+  display: none;
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  background: #e7a042; /* Color de acento principal para mensaje de éxito */
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.php-email-form .loading {
+  display: none;
+  background: #3f3f3f; /* Fondo gris oscuro (color de superficie) */
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+}
+
+.php-email-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid #e7a042; /* Borde con color de acento principal */
+  border-top-color: #3f3f3f; /* Color de superficie para la parte estática del spinner */
+  animation: php-email-form-loading 1s linear infinite;
+}
+
+@keyframes php-email-form-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Header
+--------------------------------------------------------------*/
+.header {
+  --background-color: rgba(29, 29, 27, 0.9); /* #1d1d1b con opacidad para efecto de scroll */
+  --heading-color: #ffffff;
+  color: #ffffff; /* Color de texto por defecto dentro del header */
+  background-color: var(--background-color);
+  padding: 15px 0;
+  transition: all 0.5s;
+  z-index: 997;
+}
+
+.header .logo {
+  line-height: 1;
+}
+
+.header .logo img {
+  max-height: 36px;
+  margin-right: 8px;
+}
+
+.header .logo h1 {
+  font-size: 30px;
+  margin: 0;
+  font-weight: 500;
+  color: var(--heading-color);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header .btn-getstarted,
+.header .btn-getstarted:focus {
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  background: #e7a042; /* Color de acento principal (naranja) */
+  font-size: 14px;
+  padding: 8px 25px;
+  margin: 0 0 0 30px;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.header .btn-getstarted:hover,
+.header .btn-getstarted:focus:hover {
+  color: #1d1d1b;
+  background: #efbe3d; /* Color de acento para hover (dorado) */
+}
+
+@media (max-width: 1200px) {
+  .header .logo {
+    order: 1;
+  }
+
+  .header .btn-getstarted {
+    order: 2;
+    margin: 0 15px 0 0;
+    padding: 6px 15px;
+  }
+
+  .header .navmenu {
+    order: 3;
+  }
+}
+
+/* Index Page Header
+------------------------------*/
+.index-page .header {
+  --background-color: rgba(29, 29, 27, 0); /* Fondo oscuro principal, totalmente transparente */
+  --heading-color: #ffffff;
+  --nav-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Index Page Header on Scroll
+------------------------------*/
+.index-page.scrolled .header {
+  --background-color: rgba(29, 29, 27, 0.9); /* Fondo oscuro principal, casi opaco */
+}
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/* Desktop Navigation */
+@media (min-width: 1200px) {
+  .navmenu {
+    padding: 0;
+  }
+
+  .navmenu ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+
+  .navmenu li {
+    position: relative;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: rgba(255, 255, 255, 0.7); /* Color de texto semi-transparente por defecto */
+    padding: 18px 15px;
+    font-size: 15px;
+    font-family: var(--nav-font);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    transition: 0.3s;
+  }
+
+  .navmenu li:last-child a {
+    padding-right: 0;
+  }
+
+  .navmenu li:hover>a,
+  .navmenu .active,
+  .navmenu .active:focus {
+    color: #e7a042; /* Color de acento principal para hover y activo */
+  }
+
+  .navmenu .dropdown ul {
+    margin: 0;
+    padding: 10px 0;
+    background: #3f3f3f; /* Fondo de superficie (gris oscuro) para el dropdown */
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    left: 14px;
+    top: 130%;
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 4px;
+    z-index: 99;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .navmenu .dropdown ul li {
+    min-width: 200px;
+  }
+
+  .navmenu .dropdown ul a {
+    padding: 10px 20px;
+    font-size: 15px;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.7); /* Color de texto del dropdown */
+  }
+
+  .navmenu .dropdown ul a i {
+    font-size: 12px;
+  }
+
+  .navmenu .dropdown ul a:hover,
+  .navmenu .dropdown ul .active:hover,
+  .navmenu .dropdown ul li:hover>a {
+    color: #efbe3d; /* Color de acento hover (dorado) para el dropdown */
+  }
+
+  .navmenu .dropdown:hover>ul {
+    opacity: 1;
+    top: 100%;
+    visibility: visible;
+  }
+
+  .navmenu .dropdown .dropdown ul {
+    top: 0;
+    left: -90%;
+    visibility: hidden;
+  }
+
+  .navmenu .dropdown .dropdown:hover>ul {
+    opacity: 1;
+    top: 0;
+    left: -100%;
+    visibility: visible;
+  }
+
+  .navmenu .megamenu {
+    position: static;
+  }
+
+  .navmenu .megamenu ul {
+    margin: 0;
+    padding: 10px;
+    background: #3f3f3f; /* Fondo de superficie para megamenu */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    top: 130%;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    transition: 0.3s;
+    border-radius: 4px;
+    z-index: 99;
+  }
+
+  .navmenu .megamenu ul li {
+    flex: 1;
+  }
+
+  .navmenu .megamenu ul li a,
+  .navmenu .megamenu ul li:hover>a {
+    padding: 10px 20px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7); /* Color de texto del megamenu */
+  }
+
+  .navmenu .megamenu ul li a:hover,
+  .navmenu .megamenu ul li .active,
+  .navmenu .megamenu ul li .active:hover {
+    color: #efbe3d; /* Color hover para el megamenu */
+  }
+
+  .navmenu .megamenu:hover>ul {
+    opacity: 1;
+    top: 100%;
+    visibility: visible;
+  }
+
+  .navmenu .dd-box-shadow {
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Mobile Navigation */
+@media (max-width: 1199px) {
+  .mobile-nav-toggle {
+    color: #ffffff; /* Icono del menú hamburguesa en blanco */
+    font-size: 28px;
+    line-height: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .navmenu {
+    padding: 0;
+    z-index: 9997;
+  }
+
+  .navmenu ul {
+    display: none;
+    list-style: none;
+    position: absolute;
+    inset: 60px 20px 20px 20px;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 6px;
+    background-color: #3f3f3f; /* Fondo de superficie para menú móvil */
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 9998;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: rgba(255, 255, 255, 0.7); /* Texto de enlaces en menú móvil */
+    padding: 10px 20px;
+    font-family: var(--nav-font);
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+    background-color: rgba(231, 160, 66, 0.1); /* Fondo del icono del dropdown con opacidad */
+  }
+
+  .navmenu a i:hover,
+  .navmenu a:focus i:hover {
+    background-color: #e7a042; /* Fondo del icono con acento principal */
+    color: #1d1d1b; /* Texto oscuro del icono para contraste */
+  }
+
+  .navmenu a:hover,
+  .navmenu .active,
+  .navmenu .active:focus {
+    color: #efbe3d; /* Color hover dorado para enlaces activos/hover */
+  }
+
+  .navmenu .active i,
+  .navmenu .active:focus i {
+    background-color: #e7a042;
+    color: #1d1d1b;
+    transform: rotate(180deg);
+  }
+
+  .navmenu .dropdown ul {
+    position: static;
+    display: none;
+    z-index: 99;
+    padding: 10px 0;
+    margin: 10px 20px;
+    background-color: #3f3f3f;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil para dropdowns anidados */
+    box-shadow: none;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .navmenu .dropdown ul ul {
+    background-color: rgba(29, 29, 27, 0.2); /* Fondo ligeramente diferente para sub-niveles */
+  }
+
+  .navmenu .dropdown>.dropdown-active {
+    display: block;
+    background-color: rgba(29, 29, 27, 0.1);
+  }
+
+  .mobile-nav-active {
+    overflow: hidden;
+  }
+
+  .mobile-nav-active .mobile-nav-toggle {
+    color: #fff;
+    position: absolute;
+    font-size: 32px;
+    top: 15px;
+    right: 15px;
+    margin-right: 0;
+    z-index: 9999;
+  }
+
+  .mobile-nav-active .navmenu {
+    position: fixed;
+    overflow: hidden;
+    inset: 0;
+    background: rgba(29, 29, 27, 0.9); /* Overlay oscuro con opacidad */
+    transition: 0.3s;
+  }
+
+  .mobile-nav-active .navmenu>ul {
+    display: block;
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Footer
+--------------------------------------------------------------*/
+.footer {
+  color: rgba(255, 255, 255, 0.7); /* Texto por defecto del footer semi-transparente */
+  background-color: #1d1d1b; /* Fondo principal oscuro */
+  font-size: 14px;
+  padding-bottom: 50px;
+  position: relative;
+}
+
+.footer .footer-newsletter {
+  background-color: #3f3f3f; /* Fondo de superficie (gris oscuro) */
+  padding: 50px 0;
+}
+
+.footer .footer-newsletter h4 {
+  font-size: 24px;
+  color: #ffffff; /* Títulos en blanco sólido */
+}
+
+.footer .footer-newsletter .newsletter-form {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  padding: 6px 8px;
+  position: relative;
+  background-color: rgba(29, 29, 27, 0.5); /* Fondo oscuro con transparencia */
+  border: 1px solid #3f3f3f; /* Borde de color de superficie */
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  transition: 0.3s;
+  border-radius: 50px;
+}
+
+.footer .footer-newsletter .newsletter-form:focus-within {
+  border-color: #e7a042; /* Borde con acento principal al hacer focus */
+}
+
+.footer .footer-newsletter .newsletter-form input[type=email] {
+  border: 0;
+  padding: 4px;
+  width: 100%;
+  background-color: transparent; /* Fondo transparente para el input */
+  color: #ffffff; /* Texto del input en blanco */
+}
+
+.footer .footer-newsletter .newsletter-form input[type=email]:focus-visible {
+  outline: none;
+}
+
+.footer .footer-newsletter .newsletter-form input[type=submit] {
+  border: 0;
+  font-size: 16px;
+  padding: 0 20px;
+  margin: -7px -8px -7px 0;
+  background: #e7a042; /* Fondo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  transition: 0.3s;
+  border-radius: 50px;
+}
+
+.footer .footer-newsletter .newsletter-form input[type=submit]:hover {
+  background: #efbe3d; /* Fondo con acento hover (dorado) */
+}
+
+.footer .footer-top {
+  padding-top: 50px;
+}
+
+.footer .social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #3f3f3f; /* Borde con color de superficie */
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7); /* Iconos semi-transparentes */
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.footer .social-links a:hover {
+  color: #e7a042; /* Color de acento principal al hacer hover */
+  border-color: #e7a042;
+}
+
+.footer h4 {
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 12px;
+  color: #ffffff; /* Títulos de widgets en blanco */
+}
+
+.footer .footer-links {
+  margin-bottom: 30px;
+}
+
+.footer .footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer .footer-links ul i {
+  margin-right: 3px;
+  font-size: 12px;
+  line-height: 0;
+  color: #e7a042; /* Iconos de viñetas con acento principal */
+}
+
+.footer .footer-links ul li {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.footer .footer-links ul li:first-child {
+  padding-top: 0;
+}
+
+.footer .footer-links ul a {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.7); /* Enlaces del footer semi-transparentes */
+  line-height: 1;
+}
+
+.footer .footer-links ul a:hover {
+  color: #e7a042; /* Color de acento principal al hacer hover */
+}
+
+.footer .footer-about a {
+  color: #ffffff; /* Título del logo en el footer en blanco */
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: var(--heading-font);
+}
+
+.footer .footer-contact p {
+  margin-bottom: 5px;
+}
+
+.footer .copyright {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-top: 1px solid #3f3f3f; /* Borde superior con color de superficie */
+}
+
+.footer .copyright p {
+  margin-bottom: 0;
+}
+
+.footer .credits {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  overflow: hidden;
+  background: #1d1d1b; /* Fondo principal oscuro */
+  transition: all 0.6s ease-out;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #e7a042; /* Borde con acento principal */
+  border-color: #e7a042 transparent #e7a042 transparent; /* Efecto de spinner con el color de acento */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: animate-preloader 1.5s linear infinite;
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Scroll Top Button
+--------------------------------------------------------------*/
+.scroll-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: -15px;
+  z-index: 99999;
+  background-color: var(--accent-color);
+  width: 44px;
+  height: 44px;
+  border-radius: 50px;
+  transition: all 0.4s;
+}
+
+.scroll-top i {
+  font-size: 24px;
+  color: var(--contrast-color);
+  line-height: 0;
+}
+
+.scroll-top:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+  color: var(--contrast-color);
+}
+
+.scroll-top.active {
+  visibility: visible;
+  opacity: 1;
+  bottom: 15px;
+}
+
+/*--------------------------------------------------------------
+# Disable aos animation delay on mobile devices
+--------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Page Titles & Breadcrumbs
+--------------------------------------------------------------*/
+.page-title {
+  background-color: #3f3f3f; /* Fondo de superficie (gris oscuro) */
+  color: #ffffff; /* Texto en blanco */
+  padding: 20px 0;
+  position: relative;
+}
+
+.page-title h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff; /* Aseguramos que el título sea blanco */
+}
+
+.page-title .breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0 0 10px 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+.page-title .breadcrumbs ol li+li {
+  padding-left: 10px;
+}
+
+.page-title .breadcrumbs ol li+li::before {
+  content: "/";
+  display: inline-block;
+  padding-right: 10px;
+  color: rgba(255, 255, 255, 0.5); /* Separador semi-transparente */
+}
+
+/*--------------------------------------------------------------
+# Global Sections
+--------------------------------------------------------------*/
+section,
+.section {
+  color: #ffffff; /* Texto por defecto en blanco */
+  background-color: #1d1d1b; /* Fondo principal oscuro */
+  padding: 60px 0;
+  scroll-margin-top: 88px;
+  overflow: clip;
+}
+
+@media (max-width: 1199px) {
+
+  section,
+  .section {
+    scroll-margin-top: 66px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Section Titles
+--------------------------------------------------------------*/
+.section-title {
+  text-align: center;
+  padding-bottom: 60px;
+  position: relative;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  text-transform: uppercase;
+  position: relative;
+  color: #ffffff; /* Título de sección en blanco */
+}
+
+.section-title h2:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 160px;
+  height: 1px;
+  background: #3f3f3f; /* Línea separadora con color de superficie */
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  margin: auto;
+}
+
+.section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #e7a042; /* Línea de acento con color primario */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.section-title p {
+  margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero {
+  width: 100%;
+  min-height: 80vh;
+  position: relative;
+  padding: 120px 0 60px 0;
+  display: flex;
+  align-items: center;
+  background-color: #1d1d1b; /* Fondo principal oscuro */
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+  margin: 5px 0 30px 0;
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.hero .btn-get-started {
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  background: #e7a042; /* Color de acento principal (naranja) */
+  font-family: var(--heading-font);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 28px 12px 28px;
+  border-radius: 50px;
+  transition: 0.5s;
+}
+
+.hero .btn-get-started:hover {
+  color: #1d1d1b;
+  background: #efbe3d; /* Color de acento hover (dorado) */
+}
+
+.hero .btn-watch-video {
+  font-size: 16px;
+  transition: 0.5s;
+  margin-left: 25px;
+  color: #ffffff; /* Texto en blanco */
+  font-weight: 600;
+}
+
+.hero .btn-watch-video i {
+  color: #e7a042; /* Icono con color de acento principal */
+  font-size: 32px;
+  transition: 0.3s;
+  line-height: 0;
+  margin-right: 8px;
+}
+
+.hero .btn-watch-video:hover {
+  color: #efbe3d; /* Color de acento hover (dorado) */
+}
+
+.hero .btn-watch-video:hover i {
+  color: #efbe3d; /* Icono también cambia al color hover */
+}
+
+.hero .animated {
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
+}
+
+@media (max-width: 640px) {
+  .hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .hero p {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+
+  .hero .btn-get-started,
+  .hero .btn-watch-video {
+    font-size: 13px;
+  }
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(-10px);
+  }
+}
+/*--------------------------------------------------------------
+# Clients Section
+--------------------------------------------------------------*/
+.clients {
+  padding: 12px 0;
+  background-color: #1d1d1b; /* Fondo principal oscuro */
+}
+
+.clients .swiper {
+  padding: 10px 0;
+}
+
+.clients .swiper-wrapper {
+  height: auto;
+}
+
+.clients .swiper-slide img {
+  transition: 0.3s;
+  padding: 0 10px;
+  /* Opcional: para que los logos se integren mejor en el tema oscuro, puedes usar un filtro */
+  /* filter: brightness(0) invert(1) opacity(0.7); */
+}
+
+.clients .swiper-slide img:hover {
+  transform: scale(1.1);
+  /* Opcional: al pasar el mouse, el logo vuelve a su color original */
+  /* filter: none; */
+}
+
+/*--------------------------------------------------------------
+# About Section
+--------------------------------------------------------------*/
+.about ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about ul li {
+  padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.about ul i {
+  font-size: 20px;
+  padding-right: 4px;
+  color: #e7a042; /* Color de acento principal */
+}
+
+.about .read-more {
+  color: #e7a042; /* Color de acento principal */
+  font-family: var(--heading-font);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 8px 28px;
+  border-radius: 5px;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #e7a042; /* Borde con acento principal */
+}
+
+.about .read-more i {
+  font-size: 18px;
+  margin-left: 5px;
+  line-height: 0;
+  transition: 0.3s;
+}
+
+.about .read-more:hover {
+  background: #e7a042; /* Fondo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+}
+
+.about .read-more:hover i {
+  transform: translate(5px, 0);
+}
+
+/*--------------------------------------------------------------
+# Why Us Section
+--------------------------------------------------------------*/
+.why-us {
+  padding: 30px 0;
+}
+
+.why-us .content h3 {
+  font-weight: 400;
+  font-size: 34px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.why-us .content p {
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+}
+
+.why-us .faq-container .faq-item {
+  background-color: #3f3f3f; /* Color de superficie (gris oscuro) */
+  position: relative;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.why-us .faq-container .faq-item:last-child {
+  margin-bottom: 0;
+}
+
+.why-us .faq-container .faq-item h3 {
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 24px;
+  margin: 0 30px 0 0;
+  transition: 0.3s;
+  cursor: pointer;
+  color: #ffffff; /* Título del FAQ en blanco */
+}
+
+.why-us .faq-container .faq-item h3 span {
+  color: #e7a042; /* Color de acento para el número */
+  padding-right: 5px;
+  font-weight: 600;
+}
+
+.why-us .faq-container .faq-item h3:hover {
+  color: #e7a042; /* Color de acento al hacer hover */
+}
+
+.why-us .faq-container .faq-item .faq-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: 0.3s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.why-us .faq-container .faq-item .faq-content p {
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.why-us .faq-container .faq-item .faq-icon {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  font-size: 22px;
+  line-height: 0;
+  transition: 0.3s;
+  color: #e7a042; /* Color de acento para el icono */
+}
+
+.why-us .faq-container .faq-item .faq-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 16px;
+  line-height: 0;
+  transition: 0.3s;
+  cursor: pointer;
+  color: #ffffff; /* Color del icono de toggle en blanco */
+}
+
+.why-us .faq-container .faq-item .faq-toggle:hover {
+  color: #e7a042; /* Color de acento al hacer hover */
+}
+
+.why-us .faq-container .faq-active h3 {
+  color: #e7a042; /* Color de acento para el título activo */
+}
+
+.why-us .faq-container .faq-active .faq-content {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  opacity: 1;
+  padding-top: 10px;
+}
+
+.why-us .faq-container .faq-active .faq-toggle {
+  transform: rotate(90deg);
+  color: #e7a042; /* Color de acento para el icono activo */
+}
+
+.why-us .why-us-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.why-us .why-us-img img {
+  max-height: 70%;
+}
+
+/*--------------------------------------------------------------
+# Skills Section
+--------------------------------------------------------------*/
+.skills .content h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff; /* Título en blanco */
+}
+
+.skills .content p {
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+}
+
+.skills .content p:last-child {
+  margin-bottom: 0;
+}
+
+.skills .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skills .content ul li {
+  padding-bottom: 10px;
+}
+
+.skills .progress {
+  height: 60px;
+  display: block;
+  background: none;
+  border-radius: 0;
+}
+
+.skills .progress .skill {
+  color: #ffffff; /* Texto de la habilidad en blanco */
+  padding: 0;
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+  display: block;
+  font-weight: 600;
+  font-family: var(--heading-font);
+}
+
+.skills .progress .skill .val {
+  float: right;
+  font-style: normal;
+}
+
+.skills .progress-bar-wrap {
+  background: rgba(255, 255, 255, 0.1); /* Fondo de la barra de progreso semi-transparente */
+  height: 10px;
+}
+
+.skills .progress-bar {
+  width: 1px;
+  height: 10px;
+  transition: 0.9s;
+  background-color: #e7a042; /* Color de la barra de progreso con acento principal */
+}
+
+/*--------------------------------------------------------------
+# Services Section
+--------------------------------------------------------------*/
+.services .service-item {
+  background-color: #3f3f3f; /* Color de superficie (gris oscuro) */
+  box-shadow: 0px 5px 90px 0px rgba(0, 0, 0, 0.1);
+  padding: 50px 30px;
+  transition: all ease-in-out 0.4s;
+  height: 100%;
+}
+
+.services .service-item .icon {
+  margin-bottom: 10px;
+}
+
+.services .service-item .icon i {
+  color: #e7a042; /* Icono con color de acento principal */
+  font-size: 36px;
+  transition: 0.3s;
+}
+
+.services .service-item h4 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.services .service-item h4 a {
+  color: #ffffff; /* Título en blanco */
+  transition: ease-in-out 0.3s;
+}
+
+.services .service-item p {
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+}
+
+.services .service-item:hover {
+  transform: translateY(-10px);
+}
+
+.services .service-item:hover h4 a {
+  color: #e7a042; /* Título con color de acento al hacer hover */
+}
+
+/*--------------------------------------------------------------
+# Work Process Section
+--------------------------------------------------------------*/
+.work-process .steps-item {
+  background: #3f3f3f; /* Color de superficie */
+  border-radius: 20px;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.work-process .steps-item .steps-image {
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+}
+
+.work-process .steps-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(231, 160, 66, 0.15); /* Sombra con color de acento */
+}
+
+.work-process .steps-item:hover .steps-number {
+  background: #e7a042; /* Fondo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+}
+
+.work-process .steps-item:hover .steps-image img {
+  transform: scale(1.1);
+}
+
+.work-process .steps-image {
+  position: relative;
+  height: 280px;
+}
+
+.work-process .steps-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.work-process .steps-content {
+  position: relative;
+  padding: 40px 30px 30px;
+}
+
+.work-process .steps-content .steps-number {
+  position: absolute;
+  left: 30px;
+  top: -30px;
+  width: 60px;
+  height: 60px;
+  background: #e7a042; /* Fondo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  border-radius: 50%;
+  font-family: var(--heading-font);
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.work-process .steps-content h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.work-process .steps-content p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8); /* Texto semi-transparente */
+  margin-bottom: 25px;
+}
+
+.work-process .steps-features .feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.work-process .steps-features .feature-item:last-child {
+  margin-bottom: 0;
+}
+
+.work-process .steps-features .feature-item i {
+  color: #e7a042; /* Icono con acento principal */
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.work-process .steps-features .feature-item span {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85); /* Texto semi-transparente */
+}
+
+@media (max-width: 1199px) {
+  .work-process .steps-image {
+    height: 240px;
+  }
+
+  .work-process .steps-content {
+    padding: 35px 25px 25px;
+  }
+
+  .work-process .steps-content h3 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 991px) {
+  .work-process .steps-item {
+    margin-bottom: 30px;
+  }
+
+  .work-process .steps-image {
+    height: 220px;
+  }
+
+  .work-process .steps-content {
+    padding: 30px 20px 20px;
+  }
+
+  .work-process .steps-content .steps-number {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    left: 25px;
+    top: -25px;
+  }
+
+  .work-process .steps-content h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .work-process .steps-content p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Call To Action Section
+--------------------------------------------------------------*/
+.call-to-action {
+  padding: 120px 0;
+  position: relative;
+  clip-path: inset(0);
+}
+
+.call-to-action img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.call-to-action:before {
+  content: "";
+  background: rgba(29, 29, 27, 0.65); /* Fondo oscuro principal con opacidad */
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.call-to-action .container {
+  position: relative;
+  z-index: 3;
+}
+
+.call-to-action h3 {
+  color: #ffffff; /* Título en blanco */
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.call-to-action p {
+  color: #ffffff; /* Texto en blanco */
+}
+
+.call-to-action .cta-btn {
+  font-family: var(--heading-font);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 12px 40px;
+  border-radius: 50px;
+  transition: 0.5s;
+  margin: 10px;
+  border: 2px solid #ffffff; /* Borde en blanco */
+  color: #ffffff; /* Texto en blanco */
+}
+
+.call-to-action .cta-btn:hover {
+  background: #e7a042; /* Fondo con acento principal */
+  border: 2px solid #e7a042;
+}
+
+/*--------------------------------------------------------------
+# Portfolio Section
+--------------------------------------------------------------*/
+.portfolio .portfolio-filters {
+  padding: 0;
+  margin: 0 auto 20px auto;
+  list-style: none;
+  text-align: center;
+}
+
+.portfolio .portfolio-filters li {
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 20px 10px 20px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 5px;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+  font-family: var(--heading-font);
+  color: #ffffff; /* Texto del filtro en blanco */
+}
+
+.portfolio .portfolio-filters li:hover,
+.portfolio .portfolio-filters li.filter-active {
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  background-color: #e7a042; /* Fondo con acento principal */
+}
+
+.portfolio .portfolio-filters li:first-child {
+  margin-left: 0;
+}
+
+.portfolio .portfolio-filters li:last-child {
+  margin-right: 0;
+}
+
+@media (max-width: 575px) {
+  .portfolio .portfolio-filters li {
+    font-size: 14px;
+    margin: 0 0 10px 0;
+  }
+}
+
+.portfolio .portfolio-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio .portfolio-item .portfolio-info {
+  opacity: 0;
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -100%;
+  z-index: 3;
+  transition: all ease-in-out 0.5s;
+  background: rgba(29, 29, 27, 0.9); /* Fondo oscuro con opacidad */
+  padding: 15px;
+}
+
+.portfolio .portfolio-item .portfolio-info h4 {
+  font-size: 18px;
+  font-weight: 600;
+  padding-right: 50px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.portfolio .portfolio-item .portfolio-info p {
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+  font-size: 14px;
+  margin-bottom: 0;
+  padding-right: 50px;
+}
+
+.portfolio .portfolio-item .portfolio-info .preview-link,
+.portfolio .portfolio-item .portfolio-info .details-link {
+  position: absolute;
+  right: 50px;
+  font-size: 24px;
+  top: calc(50% - 14px);
+  color: rgba(255, 255, 255, 0.7); /* Iconos semi-transparentes */
+  transition: 0.3s;
+  line-height: 0;
+}
+
+.portfolio .portfolio-item .portfolio-info .preview-link:hover,
+.portfolio .portfolio-item .portfolio-info .details-link:hover {
+  color: #e7a042; /* Color de acento al hacer hover */
+}
+
+.portfolio .portfolio-item .portfolio-info .details-link {
+  right: 14px;
+  font-size: 28px;
+}
+
+.portfolio .portfolio-item:hover .portfolio-info {
+  opacity: 1;
+  bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# Team Section
+--------------------------------------------------------------*/
+.team .team-member {
+  background-color: #3f3f3f; /* Color de superficie (gris oscuro) */
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-radius: 5px;
+  transition: 0.5s;
+  padding: 30px;
+  height: 100%;
+}
+
+@media (max-width: 468px) {
+  .team .team-member {
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+.team .team-member .pic {
+  overflow: hidden;
+  width: 150px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.team .team-member .pic img {
+  transition: ease-in-out 0.3s;
+}
+
+.team .team-member:hover {
+  transform: translateY(-10px);
+}
+
+.team .team-member .member-info {
+  padding-left: 30px;
+}
+
+@media (max-width: 468px) {
+  .team .team-member .member-info {
+    padding: 30px 0 0 0;
+    text-align: center;
+  }
+}
+
+.team .team-member h4 {
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 20px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.team .team-member span {
+  display: block;
+  font-size: 15px;
+  padding-bottom: 10px;
+  position: relative;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+}
+
+.team .team-member span::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15); /* Separador semi-transparente */
+  bottom: 0;
+  left: 0;
+}
+
+@media (max-width: 468px) {
+  .team .team-member span::after {
+    left: calc(50% - 25px);
+  }
+}
+
+.team .team-member p {
+  margin: 10px 0 0 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+}
+
+.team .team-member .social {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+}
+
+@media (max-width: 468px) {
+  .team .team-member .social {
+    justify-content: center;
+  }
+}
+
+.team .team-member .social a {
+  background: rgba(255, 255, 255, 0.08); /* Fondo de icono social semi-transparente */
+  transition: ease-in-out 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  width: 36px;
+  height: 36px;
+}
+
+.team .team-member .social a i {
+  color: rgba(255, 255, 255, 0.7); /* Icono semi-transparente */
+  font-size: 16px;
+  margin: 0 2px;
+}
+
+.team .team-member .social a:hover {
+  background: #e7a042; /* Fondo con acento principal al hacer hover */
+}
+
+.team .team-member .social a:hover i {
+  color: #1d1d1b; /* Icono oscuro para contraste */
+}
+
+.team .team-member .social a+a {
+  margin-left: 8px;
+}
+
+/*--------------------------------------------------------------
+# Pricing Section
+--------------------------------------------------------------*/
+.pricing .pricing-item {
+  background-color: #3f3f3f; /* Color de superficie (gris oscuro) */
+  box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3f3f3f; /* Borde superior con color de superficie */
+  padding: 60px 40px;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.pricing h3 {
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.pricing h4 {
+  color: #e7a042; /* Color de acento principal */
+  font-size: 48px;
+  font-weight: 400;
+  font-family: var(--heading-font);
+  margin-bottom: 0;
+}
+
+.pricing h4 sup {
+  font-size: 28px;
+}
+
+.pricing h4 span {
+  color: rgba(255, 255, 255, 0.5); /* Texto semi-transparente */
+  font-size: 18px;
+}
+
+.pricing ul {
+  padding: 20px 0;
+  list-style: none;
+  color: rgba(255, 255, 255, 0.7); /* Texto de lista semi-transparente */
+  text-align: left;
+  line-height: 20px;
+}
+
+.pricing ul li {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.pricing ul i {
+  color: #e7a042; /* Icono de check con acento principal */
+  font-size: 24px;
+  padding-right: 3px;
+}
+
+.pricing ul .na {
+  color: rgba(255, 255, 255, 0.4); /* Color para elementos no disponibles */
+}
+
+.pricing ul .na i {
+  color: rgba(255, 255, 255, 0.4); /* Icono para elementos no disponibles */
+}
+
+.pricing ul .na span {
+  text-decoration: line-through;
+}
+
+.pricing .buy-btn {
+  color: #e7a042; /* Color de acento principal */
+  display: inline-block;
+  padding: 8px 35px 10px 35px;
+  border-radius: 50px;
+  transition: none;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--heading-font);
+  transition: 0.3s;
+  border: 1px solid #e7a042; /* Borde con acento principal */
+}
+
+.pricing .buy-btn:hover {
+  background: #e7a042; /* Fondo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+}
+
+.pricing .featured {
+  border-top-color: #e7a042; /* Borde superior con acento principal para el plan destacado */
+}
+
+.pricing .featured .buy-btn {
+  background: #e7a042; /* Fondo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+}
+
+@media (max-width: 992px) {
+  .pricing .box {
+    max-width: 60%;
+    margin: 0 auto 30px auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .pricing .box {
+    max-width: 80%;
+    margin: 0 auto 30px auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .pricing .box {
+    max-width: 100%;
+    margin: 0 auto 30px auto;
+  }
+}
+
+/*--------------------------------------------------------------
+# Testimonials Section
+--------------------------------------------------------------*/
+.testimonials .section-header {
+  margin-bottom: 40px;
+}
+
+.testimonials .testimonials-carousel,
+.testimonials .testimonials-slider {
+  overflow: hidden;
+}
+
+.testimonials .testimonial-item {
+  text-align: center;
+}
+
+.testimonials .testimonial-item .testimonial-img {
+  width: 120px;
+  border-radius: 50%;
+  border: 4px solid #3f3f3f; /* Borde con color de superficie */
+  margin: 0 auto;
+}
+
+.testimonials .testimonial-item h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0 5px 0;
+  color: #ffffff; /* Título en blanco */
+}
+
+.testimonials .testimonial-item h4 {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6); /* Texto semi-transparente */
+  margin: 0 0 15px 0;
+}
+
+.testimonials .testimonial-item .stars {
+  margin-bottom: 15px;
+}
+
+.testimonials .testimonial-item .stars i {
+  color: #ffc107; /* Mantenemos el amarillo para las estrellas, es universal */
+  margin: 0 1px;
+}
+
+.testimonials .testimonial-item .quote-icon-left,
+.testimonials .testimonial-item .quote-icon-right {
+  color: rgba(231, 160, 66, 0.5); /* Comillas con acento principal semi-transparente */
+  font-size: 26px;
+  line-height: 0;
+}
+
+.testimonials .testimonial-item .quote-icon-left {
+  display: inline-block;
+  left: -5px;
+  position: relative;
+}
+
+.testimonials .testimonial-item .quote-icon-right {
+  display: inline-block;
+  right: -5px;
+  position: relative;
+  top: 10px;
+  transform: scale(-1, -1);
+}
+
+.testimonials .testimonial-item p {
+  font-style: italic;
+  margin: 0 auto 15px auto;
+  color: rgba(255, 255, 255, 0.8); /* Texto del testimonio */
+}
+
+.testimonials .swiper-wrapper {
+  height: auto;
+}
+
+.testimonials .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+}
+
+.testimonials .swiper-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.2); /* Paginador inactivo semi-transparente */
+}
+
+.testimonials .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: #e7a042; /* Paginador activo con acento principal */
+}
+
+@media (min-width: 992px) {
+  .testimonials .testimonial-item p {
+    width: 80%;
+  }
+}
+
+/*--------------------------------------------------------------
+# Faq 2 Section
+--------------------------------------------------------------*/
+.faq-2 .faq-container {
+  margin-top: 15px;
+}
+
+.faq-2 .faq-container .faq-item {
+  background-color: #3f3f3f; /* Color de superficie */
+  position: relative;
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.faq-2 .faq-container .faq-item:last-child {
+  margin-bottom: 0;
+}
+
+.faq-2 .faq-container .faq-item h3 {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0 30px 0 32px;
+  transition: 0.3s;
+  cursor: pointer;
+  color: #ffffff; /* Título del FAQ en blanco */
+}
+
+.faq-2 .faq-container .faq-item h3 span {
+  color: #e7a042; /* Número con acento principal */
+  padding-right: 5px;
+}
+
+.faq-2 .faq-container .faq-item h3:hover {
+  color: #e7a042; /* Título con acento al hacer hover */
+}
+
+.faq-2 .faq-container .faq-item .faq-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: 0.3s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.faq-2 .faq-container .faq-item .faq-content p {
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.faq-2 .faq-container .faq-item .faq-icon {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  font-size: 20px;
+  line-height: 0;
+  transition: 0.3s;
+  color: #e7a042; /* Icono con acento principal */
+}
+
+.faq-2 .faq-container .faq-item .faq-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 16px;
+  line-height: 0;
+  transition: 0.3s;
+  cursor: pointer;
+  color: #ffffff; /* Icono de toggle en blanco */
+}
+
+.faq-2 .faq-container .faq-item .faq-toggle:hover {
+  color: #e7a042; /* Icono con acento al hacer hover */
+}
+
+.faq-2 .faq-container .faq-active h3 {
+  color: #e7a042; /* Título activo con acento */
+}
+
+.faq-2 .faq-container .faq-active .faq-content {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  opacity: 1;
+  padding-top: 10px;
+}
+
+.faq-2 .faq-container .faq-active .faq-toggle {
+  transform: rotate(90deg);
+  color: #e7a042; /* Icono activo con acento */
+}
+
+/*--------------------------------------------------------------
+# Subscribe Section
+--------------------------------------------------------------*/
+.subscribe .container {
+  padding: 80px 80px 0 80px;
+  background: #3f3f3f; /* Color de superficie (gris oscuro) */
+  border-radius: 15px;
+}
+
+@media (max-width: 992px) {
+  .subscribe .container {
+    padding: 60px 60px 0 60px;
+  }
+}
+
+@media (max-width: 575px) {
+  .subscribe .container {
+    padding: 25px 15px 0 15px;
+    border-radius: 0;
+  }
+}
+
+.subscribe .cta-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff; /* Título en blanco */
+}
+
+.subscribe .cta-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.8); /* Texto semi-transparente */
+}
+
+.subscribe .cta-form .form-control {
+  height: 50px;
+  border-radius: 25px 0 0 25px;
+  border: 1px solid #e7a042; /* Borde con acento principal */
+  padding-left: 20px;
+  background-color: #1d1d1b; /* Fondo oscuro para el input */
+  color: #ffffff; /* Texto del input en blanco */
+}
+
+.subscribe .cta-form .form-control:focus {
+  box-shadow: none;
+  border-color: #efbe3d; /* Borde con acento hover al hacer focus */
+}
+
+.subscribe .cta-form .btn {
+  height: 50px;
+  border-radius: 0 25px 25px 0;
+  background-color: #e7a042; /* Botón con acento principal */
+  border-color: #e7a042;
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  padding: 0 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.subscribe .cta-form .btn:hover {
+  background-color: #efbe3d; /* Fondo con acento hover */
+  border-color: #efbe3d;
+}
+
+@media (max-width: 575px) {
+  .subscribe .cta-form .btn {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 991px) {
+  .subscribe .cta-content {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .subscribe .cta-image {
+    text-align: center;
+  }
+}
+
+/*--------------------------------------------------------------
+# Recent Blog Postst Section
+--------------------------------------------------------------*/
+.recent-blog-postst .post-item {
+  background: #3f3f3f; /* Color de superficie */
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.recent-blog-postst .post-item .post-img img {
+  transition: 0.5s;
+}
+
+.recent-blog-postst .post-item .post-date {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: #e7a042; /* Fondo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  text-transform: uppercase;
+  font-size: 13px;
+  padding: 6px 12px;
+  font-weight: 500;
+}
+
+.recent-blog-postst .post-item .post-content {
+  padding: 30px;
+}
+
+.recent-blog-postst .post-item .post-title {
+  color: #ffffff; /* Título en blanco */
+  font-size: 20px;
+  font-weight: 700;
+  transition: 0.3s;
+  margin-bottom: 15px;
+}
+
+.recent-blog-postst .post-item .meta i {
+  font-size: 16px;
+  color: #e7a042; /* Icono con acento principal */
+}
+
+.recent-blog-postst .post-item .meta span {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.5); /* Texto meta semi-transparente */
+}
+
+.recent-blog-postst .post-item hr {
+  color: rgba(255, 255, 255, 0.2); /* Separador semi-transparente */
+  margin: 20px 0;
+}
+
+.recent-blog-postst .post-item .readmore {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  line-height: 1;
+  transition: 0.3s;
+  color: rgba(255, 255, 255, 0.6); /* Texto "leer más" semi-transparente */
+}
+
+.recent-blog-postst .post-item .readmore i {
+  line-height: 0;
+  margin-left: 6px;
+  font-size: 16px;
+}
+
+.recent-blog-postst .post-item:hover .post-title,
+.recent-blog-postst .post-item:hover .readmore {
+  color: #e7a042; /* Color de acento al hacer hover */
+}
+
+.recent-blog-postst .post-item:hover .post-img img {
+  transform: scale(1.1);
+}
+
+/*--------------------------------------------------------------
+# Contact Section
+--------------------------------------------------------------*/
+.contact .info-wrap {
+  background-color: #3f3f3f; /* Color de superficie */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #e7a042; /* Borde con acento principal */
+  border-bottom: 3px solid #e7a042;
+  padding: 30px;
+  height: 100%;
+}
+
+@media (max-width: 575px) {
+  .contact .info-wrap {
+    padding: 20px;
+  }
+}
+
+.contact .info-item {
+  margin-bottom: 40px;
+}
+
+.contact .info-item i {
+  font-size: 20px;
+  color: #e7a042; /* Icono con acento principal */
+  background: rgba(231, 160, 66, 0.08); /* Fondo del icono con opacidad */
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+  margin-right: 15px;
+}
+
+.contact .info-item h3 {
+  padding: 0;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.contact .info-item p {
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.contact .info-item:hover i {
+  background: #e7a042; /* Fondo con acento principal al hacer hover */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+}
+
+.contact .php-email-form {
+  background-color: #3f3f3f; /* Color de superficie */
+  height: 100%;
+  padding: 30px;
+  border-top: 3px solid #e7a042;
+  border-bottom: 3px solid #e7a042;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 575px) {
+  .contact .php-email-form {
+    padding: 20px;
+  }
+}
+
+.contact .php-email-form input[type=text],
+.contact .php-email-form input[type=email],
+.contact .php-email-form textarea {
+  font-size: 14px;
+  padding: 10px 15px;
+  box-shadow: none;
+  border-radius: 0;
+  color: #ffffff; /* Texto del input en blanco */
+  background-color: rgba(29, 29, 27, 0.5); /* Fondo oscuro con opacidad */
+  border-color: #3f3f3f; /* Borde con color de superficie */
+}
+
+.contact .php-email-form input[type=text]:focus,
+.contact .php-email-form input[type=email]:focus,
+.contact .php-email-form textarea:focus {
+  border-color: #e7a042; /* Borde con acento al hacer focus */
+}
+
+.contact .php-email-form input[type=text]::placeholder,
+.contact .php-email-form input[type=email]::placeholder,
+.contact .php-email-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7); /* Placeholder semi-transparente */
+}
+
+.contact .php-email-form button[type=submit] {
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  background: #e7a042; /* Fondo con acento principal */
+  border: 0;
+  padding: 10px 30px;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+.contact .php-email-form button[type=submit]:hover {
+  background: #efbe3d; /* Fondo con acento hover */
+}
+
+/*--------------------------------------------------------------
+# Portfolio Details Section
+--------------------------------------------------------------*/
+.portfolio-details .portfolio-details-slider img {
+  width: 100%;
+}
+
+.portfolio-details .portfolio-details-slider .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+}
+
+.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.2); /* Paginador inactivo */
+  opacity: 1;
+}
+
+.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: #e7a042; /* Paginador activo con acento */
+}
+
+.portfolio-details .portfolio-info {
+  background-color: #3f3f3f; /* Color de superficie */
+  padding: 30px;
+  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.portfolio-details .portfolio-info h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Separador semi-transparente */
+  color: #ffffff; /* Título en blanco */
+}
+
+.portfolio-details .portfolio-info ul {
+  list-style: none;
+  padding: 0;
+  font-size: 15px;
+}
+
+.portfolio-details .portfolio-info ul li+li {
+  margin-top: 10px;
+}
+
+.portfolio-details .portfolio-description {
+  padding-top: 30px;
+}
+
+.portfolio-details .portfolio-description h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ffffff; /* Título en blanco */
+}
+
+.portfolio-details .portfolio-description p {
+  padding: 0;
+  color: rgba(255, 255, 255, 0.7); /* Texto semi-transparente */
+}
+/*--------------------------------------------------------------
+# Service Details Section
+--------------------------------------------------------------*/
+.service-details .services-list {
+  background-color: #3f3f3f; /* Color de superficie (gris oscuro) */
+  padding: 10px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil semi-transparente */
+  margin-bottom: 20px;
+}
+
+.service-details .services-list a {
+  display: block;
+  line-height: 1;
+  padding: 8px 0 8px 15px;
+  border-left: 3px solid rgba(255, 255, 255, 0.3); /* Borde inactivo semi-transparente */
+  margin: 20px 0;
+  color: rgba(255, 255, 255, 0.8); /* Texto de enlace semi-transparente */
+  transition: 0.3s;
+}
+
+.service-details .services-list a.active {
+  color: #ffffff; /* Texto activo en blanco sólido */
+  font-weight: 700;
+  border-color: #e7a042; /* Borde activo con acento principal */
+}
+
+.service-details .services-list a:hover {
+  border-color: #e7a042; /* Borde con acento principal al hacer hover */
+}
+
+.service-details .services-img {
+  margin-bottom: 20px;
+}
+
+.service-details h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff; /* Título en blanco */
+}
+
+.service-details h4 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.service-details p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8); /* Texto de párrafo semi-transparente */
+}
+
+.service-details ul {
+  list-style: none;
+  padding: 0;
+  font-size: 15px;
+}
+
+.service-details ul li {
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.service-details ul i {
+  font-size: 20px;
+  margin-right: 8px;
+  color: #e7a042; /* Iconos de lista con acento principal */
+}
+
+/*--------------------------------------------------------------
+# Blog Posts Section
+--------------------------------------------------------------*/
+.blog-posts article {
+  background-color: #3f3f3f; /* Color de superficie */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  height: 100%;
+}
+
+.blog-posts .post-img {
+  max-height: 440px;
+  margin: -30px -30px 0 -30px;
+  overflow: hidden;
+}
+
+.blog-posts .title {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0;
+  margin: 30px 0;
+}
+
+.blog-posts .title a {
+  color: #ffffff; /* Título en blanco */
+  transition: 0.3s;
+}
+
+.blog-posts .title a:hover {
+  color: #e7a042; /* Título con acento al hacer hover */
+}
+
+.blog-posts .meta-top {
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.6); /* Texto meta semi-transparente */
+}
+
+.blog-posts .meta-top ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.blog-posts .meta-top ul li+li {
+  padding-left: 20px;
+}
+
+.blog-posts .meta-top i {
+  font-size: 16px;
+  margin-right: 8px;
+  line-height: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.blog-posts .meta-top a {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  display: inline-block;
+  line-height: 1;
+}
+
+.blog-posts .content {
+  margin-top: 20px;
+}
+
+.blog-posts .content .read-more {
+  text-align: right;
+}
+
+.blog-posts .content .read-more a {
+  background: #e7a042; /* Botón con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  display: inline-block;
+  padding: 8px 30px;
+  transition: 0.3s;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.blog-posts .content .read-more a:hover {
+  background: #efbe3d; /* Botón con acento hover */
+}
+
+/*--------------------------------------------------------------
+# Pagination 2 Section
+--------------------------------------------------------------*/
+.pagination-2 {
+  padding-top: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pagination-2 ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.pagination-2 li {
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.pagination-2 li a {
+  color: rgba(255, 255, 255, 0.6);
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3f3f3f; /* Borde con color de superficie */
+}
+
+.pagination-2 li.active a,
+.pagination-2 li a:hover {
+  background: #e7a042; /* Fondo activo con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  border: 1px solid #e7a042;
+}
+
+/*--------------------------------------------------------------
+# Blog Details Section
+--------------------------------------------------------------*/
+.blog-details .hero-img .meta-overlay .meta-categories .category {
+  color: #1d1d1b;
+  background-color: #e7a042;
+}
+
+.blog-details .hero-img .meta-overlay .meta-categories .category:hover {
+  background-color: #efbe3d;
+}
+
+.blog-details .article-content .content-header .author-info .post-meta {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.blog-details .article-content .content {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.blog-details .article-content .content .highlight-box {
+  background: rgba(231, 160, 66, 0.05); /* Fondo de caja destacada con opacidad */
+}
+
+.blog-details .article-content .content .highlight-box .trend-list li i {
+  color: #e7a042;
+}
+
+.blog-details .article-content .content .content-grid .info-card {
+  background: #3f3f3f;
+}
+
+.blog-details .article-content .content .content-grid .info-card i {
+  color: #e7a042;
+}
+
+.blog-details .article-content .content blockquote {
+  background: #3f3f3f;
+}
+
+.blog-details .article-content .content blockquote::before {
+  color: rgba(231, 160, 66, 0.15); /* Comillas con opacidad */
+}
+
+.blog-details .article-content .meta-bottom .tags .tag {
+  background: rgba(231, 160, 66, 0.1);
+  color: #e7a042;
+}
+
+.blog-details .article-content .meta-bottom .tags .tag:hover {
+  background: #e7a042;
+  color: #1d1d1b;
+}
+
+.blog-details .article-content .meta-bottom .social-links a {
+  background: rgba(231, 160, 66, 0.1);
+  color: #e7a042;
+}
+
+.blog-details .article-content .meta-bottom .social-links a:hover {
+  background: #e7a042;
+  color: #1d1d1b;
+}
+
+/*--------------------------------------------------------------
+# Blog Comments Section
+--------------------------------------------------------------*/
+.blog-comments .comment-thread:not(:last-child)::after {
+  background: linear-gradient(to bottom, rgba(231, 160, 66, 0.6), rgba(231, 160, 66, 0.1));
+}
+
+.blog-comments .avatar-wrapper img {
+  border: 3px solid #3f3f3f;
+}
+
+.blog-comments .comment-content {
+  background-color: #3f3f3f;
+}
+
+.blog-comments .comment-header .engagement .likes {
+  background-color: rgba(231, 160, 66, 0.08);
+  color: #e7a042;
+}
+
+.blog-comments .comment-actions .action-btn:hover {
+  color: #e7a042;
+  background-color: rgba(231, 160, 66, 0.08);
+}
+
+.blog-comments .comment-actions .action-btn:hover.like-btn i {
+  color: #e65f3c; /* Color de acento especial para "like" */
+}
+
+.blog-comments .comment-actions .action-btn.like-btn.active {
+  color: #e65f3c;
+}
+
+/*--------------------------------------------------------------
+# Blog Comment Form Section
+--------------------------------------------------------------*/
+.blog-comment-form form {
+  background-color: #3f3f3f;
+}
+
+.blog-comment-form .input-group input,
+.blog-comment-form .input-group textarea {
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background-color: #3f3f3f;
+  color: #ffffff;
+}
+
+.blog-comment-form .input-group input:hover,
+.blog-comment-form .input-group textarea:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.blog-comment-form .input-group input:focus,
+.blog-comment-form .input-group textarea:focus {
+  border-color: #e7a042;
+  box-shadow: 0 0 0 4px rgba(231, 160, 66, 0.1);
+}
+
+.blog-comment-form button[type=submit] {
+  background: #e7a042;
+  color: #1d1d1b;
+}
+
+.blog-comment-form button[type=submit]:hover {
+  background: #efbe3d;
+}
+
+/*--------------------------------------------------------------
+# Starter Section Section
+--------------------------------------------------------------*/
+.starter-section {
+  /* No colors to apply here, will inherit from global section styles */
+}
+
+/*--------------------------------------------------------------
+# Error 404 Section
+--------------------------------------------------------------*/
+.error-404 {
+  padding: 80px 0;
+  margin: 0 auto;
+}
+
+.error-404 .error-icon {
+  font-size: 5rem;
+  color: rgba(231, 160, 66, 0.85); /* Color de acento semi-transparente */
+}
+
+.error-404 .error-code {
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9); /* Título semi-transparente */
+  font-family: var(--heading-font);
+  line-height: 1;
+}
+
+.error-404 .error-title {
+  font-size: 2rem;
+  color: #ffffff; /* Título en blanco */
+  font-weight: 600;
+}
+
+.error-404 .error-text {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8); /* Texto semi-transparente */
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.error-404 .search-box {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.error-404 .search-box .input-group {
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.error-404 .search-box .form-control {
+  border: 1px solid #3f3f3f; /* Borde con color de superficie */
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #ffffff; /* Texto del input en blanco */
+  background-color: #3f3f3f; /* Color de superficie */
+  border-radius: 50px;
+}
+
+.error-404 .search-box .form-control:focus {
+  box-shadow: none;
+  border-color: #e7a042; /* Borde con acento al hacer focus */
+}
+
+.error-404 .search-box .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.4); /* Placeholder semi-transparente */
+}
+
+.error-404 .search-box .search-btn {
+  background-color: #e7a042; /* Botón con acento principal */
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  border: none;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.error-404 .search-box .search-btn:hover {
+  background-color: #efbe3d; /* Botón con acento hover */
+}
+
+.error-404 .error-action .btn-primary {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  background-color: #e7a042; /* Botón con acento principal */
+  border: none;
+  color: #1d1d1b; /* Texto oscuro para contraste */
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.error-404 .error-action .btn-primary:hover {
+  background-color: #efbe3d; /* Botón con acento hover */
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .error-404 {
+    padding: 60px 0;
+  }
+
+  .error-404 .error-code {
+    font-size: clamp(4rem, 12vw, 8rem);
+  }
+
+  .error-404 .error-title {
+    font-size: 1.5rem;
+  }
+
+  .error-404 .error-text {
+    font-size: 1rem;
+    padding: 0 20px;
+  }
+
+  .error-404 .search-box {
+    margin: 0 20px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Widgets
+--------------------------------------------------------------*/
+.widgets-container {
+  margin: 60px 0 30px 0;
+}
+
+.widget-title {
+  color: #ffffff; /* Título en blanco */
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0 0 0 10px;
+  margin: 0 0 20px 0;
+  border-left: 4px solid #e7a042; /* Borde con acento principal */
+}
+
+.widget-item {
+  margin-bottom: 30px;
+  background-color: #3f3f3f; /* Color de superficie */
+  border: 1px solid #3f3f3f;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.widget-item:last-child {
+  margin-bottom: 0;
+}
+
+.search-widget form {
+  background: #1d1d1b; /* Fondo principal oscuro */
+  border: 1px solid #3f3f3f;
+  padding: 3px 10px;
+  position: relative;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.search-widget form input[type=text] {
+  border: 0;
+  padding: 4px 10px;
+  border-radius: 4px;
+  width: calc(100% - 40px);
+  background-color: #1d1d1b;
+  color: #ffffff;
+}
+
+.search-widget form input[type=text]:focus {
+  outline: none;
+}
+
+.search-widget form button {
+  background: none;
+  color: #ffffff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 0;
+  font-size: 16px;
+  padding: 0 16px;
+  transition: 0.3s;
+  line-height: 0;
+}
+
+.search-widget form button i {
+  line-height: 0;
+}
+
+.search-widget form button:hover {
+  color: #e7a042; /* Icono con acento al hacer hover */
+}
+
+.search-widget form:is(:focus-within) {
+  border-color: #e7a042;
+}
+
+.recent-posts-widget .post-item {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.recent-posts-widget .post-item:last-child {
+  margin-bottom: 0;
+}
+
+.recent-posts-widget .post-item img {
+  width: 80px;
+  margin-right: 15px;
+}
+
+.recent-posts-widget .post-item h4 {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.recent-posts-widget .post-item h4 a {
+  color: #ffffff;
+  transition: 0.3s;
+}
+
+.recent-posts-widget .post-item h4 a:hover {
+  color: #e7a042;
+}
+
+.recent-posts-widget .post-item time {
+  display: block;
+  font-style: italic;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.categories-widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categories-widget ul li {
+  padding-bottom: 10px;
+}
+
+.categories-widget ul li:last-child {
+  padding-bottom: 0;
+}
+
+.categories-widget ul a {
+  color: rgba(255, 255, 255, 0.8);
+  transition: 0.3s;
+}
+
+.categories-widget ul a:hover {
+  color: #e7a042;
+}
+
+.categories-widget ul a span {
+  padding-left: 5px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+.tags-widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tags-widget ul li {
+  display: inline-block;
+}
+
+.tags-widget ul a {
+  background-color: rgba(231, 160, 66, 0.1); /* Fondo de tag con opacidad */
+  color: #e7a042; /* Texto con acento */
+  border-radius: 50px;
+  font-size: 14px;
+  padding: 5px 15px;
+  margin: 0 6px 8px 0;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.tags-widget ul a:hover {
+  background: #e7a042;
+  color: #1d1d1b;
+}
+
+.tags-widget ul a span {
+  padding-left: 5px;
+  color: rgba(231, 160, 66, 0.7);
+  font-size: 14px;
+}
