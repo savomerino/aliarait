@@ -703,7 +703,7 @@ h6 {
 
 .scroll-top i {
   font-size: 24px;
-  color: var(--contrast-color);
+  color: #ffffff;
   line-height: 0;
 }
 
@@ -2244,6 +2244,21 @@ section,
 
 .contact .php-email-form button[type=submit]:hover {
   background: #efbe3d; /* Fondo con acento hover */
+}
+
+/* Estilos personalizados del botón de WhatsApp */
+#whatsappBtn img {
+  display: none;
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 768px) {
+  #whatsappBtn img {
+    display: inline-block;
+  }
+  #whatsappBtn span {
+    display: none;
+  }
 }
 
 /*--------------------------------------------------------------
