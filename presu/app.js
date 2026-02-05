@@ -628,6 +628,77 @@ function imprimirPDFDesdePreview() {
     window.open(url, '_blank');
 }
 
+function descargarComoJPG() {
+    if (!presupuestoActual) return;
+    
+    const elemento = document.getElementById('preview-contenido');
+    
+    if (!elemento) {
+        alert('No hay contenido para capturar');
+        return;
+    }
+
+    // Crear un botón temporal de carga
+    const btnJPG = event.target.closest('button');
+    const textoOriginal = btnJPG.innerHTML;
+    btnJPG.disabled = true;
+    btnJPG.innerHTML = '<i class="bi bi-hourglass-split"></i> Generando...';
+
+    // Clonar el elemento para capturar todo sin afectar el original
+    const clon = elemento.cloneNode(true);
+    
+    // Aplicar estilos al clon para capturar todo el contenido
+    clon.style.position = 'absolute';
+    clon.style.left = '-9999px';
+    clon.style.top = '-9999px';
+    clon.style.width = elemento.scrollWidth + 'px';
+    clon.style.height = elemento.scrollHeight + 'px';
+    clon.style.overflow = 'visible';
+    clon.style.maxHeight = 'none';
+    clon.style.maxWidth = 'none';
+    
+    // Agregar el clon al body temporalmente
+    document.body.appendChild(clon);
+
+    // Usar html2canvas para capturar todo el contenido
+    html2canvas(clon, {
+        backgroundColor: '#1a1a1a',
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+        windowHeight: clon.scrollHeight,
+        windowWidth: clon.scrollWidth
+    })
+    .then(canvas => {
+        // Convertir canvas a imagen JPG
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/jpeg', 0.95);
+        link.download = `presupuesto_${presupuestoActual.numero}_${presupuestoActual.cliente_nombre.replace(/\s+/g, '_')}.jpg`;
+        link.click();
+
+        // Remover el clon
+        document.body.removeChild(clon);
+
+        // Restaurar botón
+        btnJPG.disabled = false;
+        btnJPG.innerHTML = textoOriginal;
+    })
+    .catch(error => {
+        console.error('Error al generar JPG:', error);
+        alert('Error al generar la imagen JPG');
+        
+        // Remover el clon en caso de error
+        if (document.body.contains(clon)) {
+            document.body.removeChild(clon);
+        }
+        
+        // Restaurar botón en caso de error
+        btnJPG.disabled = false;
+        btnJPG.innerHTML = textoOriginal;
+    });
+}
+
 function duplicarPresupuesto() {
     if (!presupuestoActual) return;
     duplicarPresupuestoDirecto(presupuestoActual.id);

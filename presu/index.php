@@ -45,6 +45,9 @@ if (isset($_GET['logout'])) {
   <!-- jsPDF para generación de PDFs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   
+  <!-- html2canvas para captura de pantalla -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
   <!-- Custom CSS para Presupuestos -->
   <style>
     .presupuesto-container {
@@ -771,6 +774,9 @@ if (isset($_GET['logout'])) {
         <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
           <h5 class="modal-title">Vista Previa del Presupuesto</h5>
           <div>
+            <button type="button" class="btn btn-sm btn-warning-custom" onclick="descargarComoJPG()" style="margin-right: 10px;">
+              <i class="bi bi-image"></i> Descargar como JPG
+            </button>
             <button type="button" class="btn btn-sm btn-warning-custom" onclick="imprimirPDFDesdePreview()" style="margin-right: 10px;">
               <i class="bi bi-printer"></i> Descargar PDF
             </button>
