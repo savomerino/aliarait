@@ -2,6 +2,9 @@
 // Descargar presupuesto como PDF usando técnica de impresión
 // Este archivo genera HTML optimizado para impresión a PDF
 
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
 // Conexión a BD
 try {
     $pdo = new PDO(
@@ -14,37 +17,39 @@ try {
         )
     );
 } catch (PDOException $e) {
+    header('Content-Type: text/html; charset=utf-8');
     http_response_code(500);
-    echo 'Error de conexión: ' . htmlspecialchars($e->getMessage());
-    die();
+    die('Error de conexión: ' . htmlspecialchars($e->getMessage()));
 }
 
 date_default_timezone_set('America/La_Paz');
 
 $id = $_GET['id'] ?? null;
-if (!$id) {
+if (!$id || !is_numeric($id)) {
+    header('Content-Type: text/html; charset=utf-8');
     http_response_code(400);
-    die('ID requerido');
+    die('ID inválido o no proporcionado');
 }
 
 try {
     // Obtener presupuesto
     $stmt = $pdo->prepare('SELECT * FROM presupuestos WHERE id = ?');
-    $stmt->execute([$id]);
+    $stmt->execute([(int)$id]);
     $presupuesto = $stmt->fetch();
     
     if (!$presupuesto) {
+        header('Content-Type: text/html; charset=utf-8');
         http_response_code(404);
         die('Presupuesto no encontrado');
     }
     
     // Obtener items
     $stmt = $pdo->prepare('SELECT * FROM presupuesto_items WHERE presupuesto_id = ? ORDER BY orden');
-    $stmt->execute([$id]);
+    $stmt->execute([(int)$id]);
     $items = $stmt->fetchAll();
     
     // Datos formateados
-    $fecha_vigencia = date('d/m/Y', strtotime('+' . $presupuesto['vigencia_dias'] . ' days', strtotime($presupuesto['fecha_creacion'])));
+    $fecha_vigencia = date('d/m/Y', strtotime('+' . intval($presupuesto['vigencia_dias']) . ' days', strtotime($presupuesto['fecha_creacion'])));
     $fecha_creacion = date('d/m/Y', strtotime($presupuesto['fecha_creacion']));
     
     $tabla_items = '';
@@ -54,7 +59,7 @@ try {
     
     // Verificar descuentos
     foreach ($items as $item) {
-        if ($item['descuento_porcentaje'] > 0) {
+        if (isset($item['descuento_porcentaje']) && floatval($item['descuento_porcentaje']) > 0) {
             $tieneDescuentos = true;
             break;
         }
@@ -62,21 +67,21 @@ try {
     
     // Generar filas de tabla
     foreach ($items as $item) {
-        $descuento = ($item['subtotal'] * $item['descuento_porcentaje']) / 100;
-        $subtotal_final = $item['subtotal'] - $descuento;
+        $descuento = (floatval($item['subtotal']) * floatval($item['descuento_porcentaje'] ?? 0)) / 100;
+        $subtotal_final = floatval($item['subtotal']) - $descuento;
         $total_items += $subtotal_final;
         $total_descuentos += $descuento;
         
         $tabla_items .= '<tr>';
         $tabla_items .= '<td>' . htmlspecialchars($item['descripcion']) . '</td>';
-        $tabla_items .= '<td style="text-align: center;">' . number_format($item['cantidad'], 2, '.', ',') . '</td>';
+        $tabla_items .= '<td style="text-align: center;">' . number_format(floatval($item['cantidad']), 2, '.', ',') . '</td>';
         $tabla_items .= '<td style="text-align: center;">' . htmlspecialchars($item['unidad']) . '</td>';
-        $tabla_items .= '<td style="text-align: right;">$ ' . number_format($item['precio_unitario'], 2, '.', ',') . '</td>';
-        $tabla_items .= '<td style="text-align: right;">$ ' . number_format($item['subtotal'], 2, '.', ',') . '</td>';
+        $tabla_items .= '<td style="text-align: right;">$ ' . number_format(floatval($item['precio_unitario']), 2, '.', ',') . '</td>';
+        $tabla_items .= '<td style="text-align: right;">$ ' . number_format(floatval($item['subtotal']), 2, '.', ',') . '</td>';
         
         if ($tieneDescuentos) {
-            if ($item['descuento_porcentaje'] > 0) {
-                $tabla_items .= '<td style="text-align: center;">' . $item['descuento_porcentaje'] . '%</td>';
+            if (isset($item['descuento_porcentaje']) && floatval($item['descuento_porcentaje']) > 0) {
+                $tabla_items .= '<td style="text-align: center;">' . htmlspecialchars($item['descuento_porcentaje']) . '%</td>';
             } else {
                 $tabla_items .= '<td style="text-align: center;">-</td>';
             }
@@ -89,7 +94,7 @@ try {
     // Calcular totales
     $totalSinDescuento = 0;
     foreach ($items as $item) {
-        $totalSinDescuento += $item['subtotal'];
+        $totalSinDescuento += floatval($item['subtotal']);
     }
     $porcentajeDescuentoTotal = $totalSinDescuento > 0 ? ($total_descuentos / $totalSinDescuento) * 100 : 0;
     $colspan = $tieneDescuentos ? 6 : 5;
@@ -160,102 +165,111 @@ try {
         .contenedor { 
             max-width: 800px; 
             margin: 0 auto; 
-            padding: 20px; 
+            padding: 10px; 
             background: white;
             color: #000;
         }
         .header { 
-            text-align: center; 
-            margin-bottom: 25px; 
-            border-bottom: 3px solid #e7a042; 
-            padding-bottom: 15px;
+            text-align: left; 
+            margin-bottom: 10px; 
+            border-bottom: 2px solid #e7a042; 
+            padding-bottom: 5px;
             page-break-after: avoid;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .header h1 { 
             color: #e7a042; 
-            font-size: 28px; 
-            margin-bottom: 5px; 
+            font-size: 22px; 
+            margin: 0; 
             font-weight: bold;
         }
         .header p { 
             color: #333; 
-            font-size: 11px; 
+            font-size: 10px; 
             margin: 0;
+            text-align: right;
         }
         .info-grid { 
             display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            margin-bottom: 20px;
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 8px; 
+            margin-bottom: 8px;
             page-break-inside: avoid;
+            font-size: 10px;
         }
         .info-box { 
             background: #f5f5f5; 
-            padding: 10px; 
-            border-left: 3px solid #e7a042;
+            padding: 4px 6px; 
+            border-left: 2px solid #e7a042;
             border-radius: 2px;
             color: #000;
         }
         .info-box strong { 
             color: #333; 
-            display: block; 
-            margin-bottom: 3px; 
+            display: inline; 
+            margin-bottom: 0; 
             font-weight: bold;
+            font-size: 9px;
         }
         .info-box span { 
-            display: block; 
+            display: inline; 
             color: #000; 
             font-weight: normal;
+            margin-left: 3px;
         }
         .cliente-box { 
             background: #f5f5f5; 
-            padding: 15px; 
-            margin-bottom: 20px; 
-            border-left: 3px solid #e7a042;
+            padding: 4px 6px; 
+            margin-bottom: 8px; 
+            border-left: 2px solid #e7a042;
             border-radius: 2px;
             page-break-inside: avoid;
             color: #000;
+            font-size: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        .cliente-box span { 
+            color: #000; 
+            font-size: 10px;
+            white-space: nowrap;
         }
         .cliente-box strong { 
             color: #333; 
-            display: block; 
-            margin-bottom: 8px; 
-            font-size: 12px; 
+            font-size: 9px; 
             font-weight: bold;
-        }
-        .cliente-row { 
-            margin-bottom: 5px; 
-            color: #000; 
-            font-weight: normal;
-        }
-        .cliente-row strong { 
-            color: #333; 
-            display: inline; 
-            font-weight: bold;
+            margin-right: 2px;
         }
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             page-break-inside: avoid;
+            font-size: 11px;
         }
         table thead { 
             background: #e7a042; 
             color: #fff;
         }
         table th { 
-            padding: 10px; 
+            padding: 6px; 
             text-align: left; 
             font-weight: bold; 
             border: 1px solid #999;
             color: #fff;
             background: #e7a042;
+            font-size: 10px;
         }
         table td { 
-            padding: 8px; 
+            padding: 5px; 
             border: 1px solid #999; 
             background: white; 
             color: #000;
+            font-size: 10px;
         }
         table tbody tr:nth-child(even) { 
             background: #fafafa;
@@ -276,54 +290,57 @@ try {
         }
         .section-box { 
             background: #f5f5f5; 
-            padding: 12px; 
-            margin-bottom: 15px; 
-            border-left: 3px solid #e7a042;
+            padding: 6px 8px; 
+            margin-bottom: 8px; 
+            border-left: 2px solid #e7a042;
             border-radius: 2px;
             page-break-inside: avoid;
             color: #000;
+            font-size: 10px;
         }
         .section-box strong { 
             color: #333; 
             display: block; 
-            margin-bottom: 8px; 
+            margin-bottom: 3px; 
             font-weight: bold;
+            font-size: 10px;
         }
         .section-box div { 
             color: #000; 
             white-space: pre-wrap; 
-            font-size: 11px; 
-            line-height: 1.4;
+            font-size: 9px; 
+            line-height: 1.3;
         }
         .footer { 
             text-align: center; 
-            font-size: 10px; 
+            font-size: 8px; 
             color: #666; 
-            margin-top: 25px; 
-            padding-top: 15px; 
+            margin-top: 8px; 
+            padding-top: 5px; 
             border-top: 1px solid #999;
             page-break-inside: avoid;
         }
         .footer p { 
-            margin: 3px 0; 
+            margin: 1px 0; 
             color: #000;
+            font-size: 8px;
         }
         .btn-container { 
             text-align: center; 
-            margin: 20px 0; 
-            padding: 20px; 
+            margin: 10px 0; 
+            padding: 10px; 
             border-top: 1px solid #ddd; 
             background: white;
         }
         .btn { 
-            padding: 10px 20px; 
+            padding: 8px 15px; 
             background: #e7a042; 
             color: white; 
             border: none; 
             border-radius: 3px; 
             cursor: pointer; 
-            font-size: 14px; 
-            margin: 0 5px; 
+            font-size: 12px; 
+            margin: 0 3px; 
             font-weight: bold;
         }
         .btn:hover { 
@@ -334,34 +351,29 @@ try {
 <body>
     <div class="contenedor">
         <div class="header">
-            <h1>PRESUPUESTO</h1>
+            <h1>PRESUPUESTO ' . $numero . '</h1>
             <p>Aliara IT - Soluciones en Redes, Servidores y Soporte</p>
         </div>
         
         <div class="info-grid">
-            <div class="info-box">
-                <strong>Número:</strong><span>' . $numero . '</span>
-                <strong>Fecha:</strong><span>' . $fecha_creacion . '</span>
-                <strong>Vigencia:</strong><span>' . $fecha_vigencia . '</span>
-            </div>
-            <div class="info-box">
-                <strong>Moneda:</strong><span>' . $moneda . '</span>
-                <strong>Estado:</strong><span style="background: #e7a042; color: white; padding: 2px 5px; border-radius: 2px; display: inline-block;">' . strtoupper($estado) . '</span>
-            </div>
+            <div class="info-box"><strong>Número:</strong><span>' . $numero . '</span></div>
+            <div class="info-box"><strong>Fecha:</strong><span>' . $fecha_creacion . '</span></div>
+            <div class="info-box"><strong>Vigencia:</strong><span>' . $fecha_vigencia . '</span></div>
+            <div class="info-box"><strong>Moneda:</strong><span>' . $moneda . '</span></div>
+            <div class="info-box"><strong>Estado:</strong><span style="background: #e7a042; color: white; padding: 1px 3px; border-radius: 2px; display: inline-block; font-size: 9px;">' . strtoupper($estado) . '</span></div>
         </div>
         
         <div class="cliente-box">
-            <strong>INFORMACIÓN DEL CLIENTE</strong>
-            <div class="cliente-row"><strong style="color: #333; display: inline;">Nombre:</strong> ' . $cliente . '</div>';
+            <span><strong>Cliente:</strong> ' . $cliente . '</span>';
     
     if (!empty($empresa)) {
-        $html .= '<div class="cliente-row"><strong style="color: #333; display: inline;">Empresa:</strong> ' . $empresa . '</div>';
+        $html .= '<span><strong>Empresa:</strong> ' . $empresa . '</span>';
     }
     if (!empty($email)) {
-        $html .= '<div class="cliente-row"><strong style="color: #333; display: inline;">Email:</strong> ' . $email . '</div>';
+        $html .= '<span><strong>Email:</strong> ' . $email . '</span>';
     }
     if (!empty($telefono)) {
-        $html .= '<div class="cliente-row"><strong style="color: #333; display: inline;">Teléfono:</strong> ' . $telefono . '</div>';
+        $html .= '<span><strong>Tel:</strong> ' . $telefono . '</span>';
     }
     
     $html .= '</div>';
@@ -414,7 +426,7 @@ try {
     }
     
     $html .= '<div class="footer">
-        <p>Este presupuesto es válido por ' . $presupuesto['vigencia_dias'] . ' días a partir de la fecha de emisión.</p>
+        <p>Este presupuesto es válido por ' . htmlspecialchars($presupuesto['vigencia_dias']) . ' días a partir de la fecha de emisión.</p>
         <p>Aliara IT - Soluciones en Tecnología</p>
         <p>Generado: ' . date('d/m/Y H:i:s') . '</p>
     </div>
@@ -426,10 +438,9 @@ try {
     </div>
     
     <script>
-        // Auto-disparar print dialog si viene con parámetro ?autoprint=1
-        window.addEventListener('load', function() {
+        window.addEventListener("load", function() {
             var urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('autoprint') === '1') {
+            if (urlParams.get("autoprint") === "1") {
                 setTimeout(function() {
                     window.print();
                 }, 500);
@@ -445,8 +456,12 @@ try {
     echo $html;
     
 } catch (Exception $e) {
+    header('Content-Type: text/html; charset=utf-8');
     http_response_code(500);
-    echo 'Error: ' . htmlspecialchars($e->getMessage());
+    echo '<!DOCTYPE html><html><body>';
+    echo '<h1>Error al generar presupuesto</h1>';
+    echo '<p>' . htmlspecialchars($e->getMessage()) . '</p>';
+    echo '</body></html>';
     die();
 }
 ?>
