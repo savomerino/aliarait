@@ -1,0 +1,41 @@
+# .gitignore - Aliara IT Web Project
+
+# Carpeta de instalación y documentación (no enviar a repositorio)
+presu/install/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencias (si usas composer)
+/vendor/
+
+# Archivos locales
+.env
+.env.local
+config-local.php
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+temp/
+tmp/
+cache/
+
+# Node modules (si usas npm)
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
