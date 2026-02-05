@@ -21,7 +21,11 @@ if (isset($_GET['logout'])) {
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" name="viewport">
+  <meta name="viewport-fit" content="cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1a1a1a">
   <title>Generador de Presupuestos - Aliara IT</title>
   <meta content="Generador rápido de presupuestos con guardado automático" name="description">
 
@@ -52,44 +56,124 @@ if (isset($_GET['logout'])) {
   <style>
     .presupuesto-container {
       min-height: 100vh;
-      padding-top: 80px;
-      padding-bottom: 40px;
+      padding-top: 70px;
+      padding-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .presupuesto-container {
+        padding-top: 60px;
+        padding-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .presupuesto-container {
+        padding-top: 50px;
+        padding-bottom: 10px;
+      }
     }
 
     .presupuesto-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .presupuesto-header {
+        margin-bottom: 15px;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .presupuesto-header {
+        margin-bottom: 12px;
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
 
     .presupuesto-title {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .presupuesto-title {
+        gap: 8px;
+      }
     }
 
     .presupuesto-title h1 {
       margin: 0;
       color: var(--accent-color);
-      font-size: 28px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .presupuesto-title h1 {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .presupuesto-title h1 {
+        font-size: 18px;
+      }
     }
 
     .presupuesto-title img {
-      height: 50px;
+      height: 40px;
+    }
+
+    @media (max-width: 480px) {
+      .presupuesto-title img {
+        height: 32px;
+      }
     }
 
     .vista-selector {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
+    @media (max-width: 480px) {
+      .vista-selector {
+        width: 100%;
+        gap: 6px;
+      }
+    }
+
     .vista-selector .btn {
-      padding: 8px 15px;
+      padding: 10px 16px;
       font-size: 14px;
+      min-height: 44px;
+      min-width: 44px;
+      white-space: nowrap;
+      touch-action: manipulation;
+    }
+
+    @media (max-width: 768px) {
+      .vista-selector .btn {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vista-selector .btn {
+        flex: 1;
+        padding: 10px 8px;
+        font-size: 12px;
+      }
     }
 
     .btn-primary-custom {
@@ -97,12 +181,18 @@ if (isset($_GET['logout'])) {
       border: none;
       color: var(--background-color);
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .btn-primary-custom:hover {
+    .btn-primary-custom:hover, .btn-primary-custom:active {
       background-color: var(--accent-color-hover);
       color: var(--background-color);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary-custom:active {
+      transform: translateY(0);
     }
 
     .btn-secondary-custom {
@@ -110,10 +200,11 @@ if (isset($_GET['logout'])) {
       border: 1px solid var(--accent-color);
       color: var(--accent-color);
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .btn-secondary-custom:hover {
+    .btn-secondary-custom:hover, .btn-secondary-custom:active {
       background-color: var(--accent-color);
       color: var(--background-color);
     }
@@ -123,10 +214,12 @@ if (isset($_GET['logout'])) {
       border: none;
       color: #000;
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 44px;
     }
 
-    .btn-warning-custom:hover {
+    .btn-warning-custom:hover, .btn-warning-custom:active {
       background-color: #ffb300;
       color: #000;
     }
@@ -135,10 +228,12 @@ if (isset($_GET['logout'])) {
       background-color: transparent;
       border: 1px solid var(--surface-color);
       color: var(--default-color);
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .btn-outline-custom:hover {
+    .btn-outline-custom:hover, .btn-outline-custom:active {
       border-color: var(--accent-color);
       color: var(--accent-color);
     }
@@ -147,17 +242,26 @@ if (isset($_GET['logout'])) {
       background-color: #dc3545;
       border: none;
       color: white;
-      padding: 8px 15px;
+      padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .btn-logout:hover {
+    .btn-logout:hover, .btn-logout:active {
       background-color: #c82333;
       color: white;
       text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .btn-logout {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
     }
 
     .presupuesto-lista {
@@ -300,10 +404,19 @@ if (isset($_GET['logout'])) {
       background-color: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: var(--default-color);
-      padding: 10px 15px;
+      padding: 10px 12px;
       border-radius: 5px;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       font-family: var(--default-font);
+      font-size: 16px;
+      min-height: 44px;
+    }
+
+    @media (max-width: 480px) {
+      .form-control, .form-select {
+        font-size: 16px;
+        padding: 10px;
+      }
     }
 
     .form-control:focus, .form-select:focus {
@@ -311,6 +424,7 @@ if (isset($_GET['logout'])) {
       border-color: var(--accent-color);
       color: var(--default-color);
       box-shadow: 0 0 0 0.2rem rgba(231, 160, 66, 0.25);
+      outline: none;
     }
 
     .form-control::placeholder {
@@ -320,6 +434,70 @@ if (isset($_GET['logout'])) {
     .form-select option {
       background-color: var(--background-color);
       color: var(--default-color);
+    }
+
+    .form-section {
+      background-color: var(--surface-color);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .form-section {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-section {
+        padding: 12px;
+        margin-bottom: 12px;
+        border-radius: 6px;
+      }
+    }
+
+    .form-section-title {
+      color: var(--accent-color);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    @media (max-width: 480px) {
+      .form-section-title {
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 480px) {
+      .form-group {
+        margin-bottom: 12px;
+      }
+    }
+
+    .form-label {
+      color: var(--default-color);
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .form-label {
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
     }
 
     .items-container {
@@ -401,7 +579,24 @@ if (isset($_GET['logout'])) {
     .tabla-items {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .tabla-items {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tabla-items {
+        font-size: 11px;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+      }
     }
 
     .tabla-items thead {
@@ -411,18 +606,77 @@ if (isset($_GET['logout'])) {
 
     .tabla-items th {
       color: var(--accent-color);
-      padding: 12px;
+      padding: 10px;
       text-align: left;
       font-weight: 600;
+      min-width: 80px;
+    }
+
+    @media (max-width: 480px) {
+      .tabla-items th {
+        padding: 8px;
+        min-width: 70px;
+      }
     }
 
     .tabla-items td {
-      padding: 12px;
+      padding: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 480px) {
+      .tabla-items td {
+        padding: 8px;
+        white-space: normal;
+      }
     }
 
     .tabla-items tbody tr:hover {
       background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .tabla-items input[type="text"],
+    .tabla-items input[type="number"],
+    .tabla-items select {
+      font-size: 12px;
+      padding: 6px;
+    }
+
+    @media (max-width: 480px) {
+      .tabla-items input[type="text"],
+      .tabla-items input[type="number"],
+      .tabla-items select {
+        font-size: 11px;
+        padding: 5px;
+        min-height: 32px;
+      }
+    }
+
+    .btn-trash {
+      background-color: rgba(220, 53, 69, 0.2);
+      border: 1px solid rgba(220, 53, 69, 0.5);
+      color: #dc3545;
+      padding: 8px 10px;
+      font-size: 12px;
+      transition: all 0.2s ease;
+      min-height: 40px;
+      min-width: 40px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-trash:hover, .btn-trash:active {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      .btn-trash {
+        padding: 6px 8px;
+        font-size: 11px;
+        min-height: 36px;
+        min-width: 36px;
+      }
     }
 
     .badge-info {
@@ -447,29 +701,133 @@ if (isset($_GET['logout'])) {
 
     .buscar-container {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 15px;
       flex-wrap: wrap;
+    }
+
+    @media (max-width: 480px) {
+      .buscar-container {
+        flex-direction: column;
+        gap: 6px;
+      }
     }
 
     .buscar-container .form-control {
       flex: 1;
-      min-width: 200px;
+      min-width: 150px;
+    }
+
+    @media (max-width: 480px) {
+      .buscar-container .form-control {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+
+    .buscar-container .form-select {
+      min-width: 130px;
+    }
+
+    @media (max-width: 480px) {
+      .buscar-container .form-select {
+        width: 100%;
+        min-width: auto;
+      }
     }
 
     .totales-resumen {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 480px) {
+      .totales-resumen {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
     }
 
     .totales-card {
       background-color: rgba(231, 160, 66, 0.1);
       border: 1px solid var(--accent-color);
       border-radius: 5px;
-      padding: 15px;
+      padding: 12px;
       text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .totales-card {
+        padding: 10px;
+      }
+    }
+
+    /* Modal responsive */
+    .modal-dialog {
+      max-height: 90vh;
+    }
+
+    @media (max-width: 768px) {
+      .modal-dialog {
+        margin: 10px;
+      }
+    }
+
+    .modal-content {
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      flex-shrink: 0;
+      padding: 12px !important;
+    }
+
+    @media (max-width: 480px) {
+      .modal-header {
+        padding: 10px !important;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
+
+    .modal-header .modal-title {
+      font-size: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .modal-header .modal-title {
+        font-size: 14px;
+        width: 100%;
+      }
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 15px !important;
+    }
+
+    @media (max-width: 480px) {
+      .modal-body {
+        padding: 12px !important;
+      }
+    }
+
+    #preview-contenido {
+      max-height: calc(100vh - 200px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    @media (max-width: 480px) {
+      #preview-contenido {
+        max-height: calc(100vh - 150px);
+      }
     }
 
     .totales-card-label {
@@ -511,6 +869,54 @@ if (isset($_GET['logout'])) {
 
       .presupuesto-card-info {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .presupuesto-header {
+        margin-bottom: 10px;
+        gap: 6px;
+      }
+
+      .presupuesto-card {
+        padding: 12px;
+        margin-bottom: 12px;
+      }
+
+      .presupuesto-card-info {
+        font-size: 12px;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .presupuesto-card-acciones {
+        flex-direction: column;
+      }
+
+      .presupuesto-card-acciones .btn {
+        width: 100%;
+        padding: 10px 8px;
+        font-size: 12px;
+      }
+
+      .editor-acciones {
+        flex-direction: column;
+      }
+
+      .editor-acciones .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 12px;
+      }
+
+      .row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .col-md-6 {
+        padding-left: 0;
+        padding-right: 0;
       }
     }
   </style>

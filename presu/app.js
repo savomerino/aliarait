@@ -4,15 +4,33 @@ let timerGuardado = null;
 let cambiosPendientes = false;
 let guardandoItems = false; // Flag para evitar guardos simultáneos
 let ultimoEstadoItems = {}; // Guardar estado anterior para detectar cambios
+let esMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
+    // Detectar viewport y aplicar optimizaciones si es mobile
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        document.body.classList.add('is-mobile');
+    }
+    
     inicializarEventos();
     cargarLista();
     
     // Ejecutar AOS
     if (typeof AOS !== 'undefined') {
         AOS.init();
+    }
+
+    // Listener para cambios de orientación en mobile
+    if (esMobile) {
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                // Recalcular layouts después de cambio de orientación
+                if (typeof AOS !== 'undefined') {
+                    AOS.refresh();
+                }
+            }, 200);
+        });
     }
 });
 
@@ -656,47 +674,94 @@ function descargarComoJPG() {
     clon.style.overflow = 'visible';
     clon.style.maxHeight = 'none';
     clon.style.maxWidth = 'none';
+    clon.style.display = 'block';
     
     // Agregar el clon al body temporalmente
     document.body.appendChild(clon);
 
-    // Usar html2canvas para capturar todo el contenido
-    html2canvas(clon, {
-        backgroundColor: '#1a1a1a',
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        allowTaint: true,
-        windowHeight: clon.scrollHeight,
-        windowWidth: clon.scrollWidth
-    })
-    .then(canvas => {
-        // Convertir canvas a imagen JPG
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/jpeg', 0.95);
-        link.download = `presupuesto_${presupuestoActual.numero}_${presupuestoActual.cliente_nombre.replace(/\s+/g, '_')}.jpg`;
-        link.click();
+    // Función para ejecutar la captura
+    const ejecutarCaptura = () => {
+        // Usar html2canvas para capturar todo el contenido
+        html2canvas(clon, {
+            backgroundColor: '#1a1a1a',
+            scale: window.devicePixelRatio || 2,
+            logging: false,
+            useCORS: true,
+            allowTaint: true,
+            windowHeight: clon.scrollHeight,
+            windowWidth: clon.scrollWidth,
+            onclone: function(clonedDocument) {
+                // Asegurar que el clon está visible para la captura
+                const clonedElement = clonedDocument.body.querySelector('#preview-contenido') || clonedDocument.body.firstChild;
+                if (clonedElement) {
+                    clonedElement.style.position = 'static';
+                    clonedElement.style.left = '0';
+                    clonedElement.style.top = '0';
+                }
+            }
+        })
+        .then(canvas => {
+            // Convertir canvas a imagen JPG
+            const link = document.createElement('a');
+            const nombreArchivo = `presupuesto_${presupuestoActual.numero}_${presupuestoActual.cliente_nombre.replace(/\s+/g, '_')}`;
+            
+            // Descargar como JPG
+            canvas.toBlob(blob => {
+                const urlDescarga = URL.createObjectURL(blob);
+                link.href = urlDescarga;
+                link.download = nombreArchivo + '.jpg';
+                
+                // Intentar descargar de forma nativa
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Liberar memoria
+                setTimeout(() => URL.revokeObjectURL(urlDescarga), 100);
+                
+                // Restaurar botón
+                btnJPG.disabled = false;
+                btnJPG.innerHTML = textoOriginal;
+                
+            }, 'image/jpeg', 0.95);
 
-        // Remover el clon
-        document.body.removeChild(clon);
+            // Remover el clon
+            if (document.body.contains(clon)) {
+                document.body.removeChild(clon);
+            }
+        })
+        .catch(error => {
+            console.error('Error al generar JPG:', error);
+            
+            // Intenta con método alternativo para iOS
+            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                alert('En iOS, la descarga se abrirá en una nueva ventana.\nMantén presionado la imagen y selecciona "Guardar imagen".');
+                html2canvas(clon, {
+                    backgroundColor: '#1a1a1a',
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: true
+                }).then(canvas => {
+                    window.open(canvas.toDataURL('image/jpeg', 0.95));
+                    if (document.body.contains(clon)) {
+                        document.body.removeChild(clon);
+                    }
+                    btnJPG.disabled = false;
+                    btnJPG.innerHTML = textoOriginal;
+                });
+            } else {
+                alert('Error al generar la imagen JPG. Intenta con la opción PDF.');
+                if (document.body.contains(clon)) {
+                    document.body.removeChild(clon);
+                }
+                btnJPG.disabled = false;
+                btnJPG.innerHTML = textoOriginal;
+            }
+        });
+    };
 
-        // Restaurar botón
-        btnJPG.disabled = false;
-        btnJPG.innerHTML = textoOriginal;
-    })
-    .catch(error => {
-        console.error('Error al generar JPG:', error);
-        alert('Error al generar la imagen JPG');
-        
-        // Remover el clon en caso de error
-        if (document.body.contains(clon)) {
-            document.body.removeChild(clon);
-        }
-        
-        // Restaurar botón en caso de error
-        btnJPG.disabled = false;
-        btnJPG.innerHTML = textoOriginal;
-    });
+    // Ejecutar captura después de un breve delay para permitir que el DOM se ajuste
+    setTimeout(ejecutarCaptura, 100);
 }
 
 function duplicarPresupuesto() {
