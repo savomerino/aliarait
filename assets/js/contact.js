@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
       var text = encodeURIComponent('Nombre: ' + name + '\nMensaje: ' + message);
-      var phone = '5493624122191';
+      var phone = '5493624215757'; 
       window.open('https://wa.me/' + phone + '?text=' + text, '_blank');
     });
   }
