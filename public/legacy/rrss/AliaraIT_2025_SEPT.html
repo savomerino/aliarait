@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Contenido Interactivo - AliaraIT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- 
+        Chosen Palette: AliaraIT Branding Palette. The colors are inspired by the branding materials provided (PDF and Website). Key colors:
+        - Background: #121212 (Dark Gray/Black)
+        - Primary Accent (Orange): #F85A40
+        - Secondary Accent (Yellow): #F9A826
+        - Text & Neutral: #FFFFFF, #F1F1F1, #A9A9A9
+        - - Surface: #1E1E1E, #2A2A2A
+    -->
+    <!-- 
+        Application Structure Plan: A dynamic dashboard-style SPA. The structure includes:
+        1. A header with the application title.
+        2. An overview section with key stats (total posts, themes) and a donut chart visualizing the content pillar distribution. This gives an immediate, high-level summary.
+        3. A filter/navigation bar to switch between two primary views: "Calendario" and "Pilares de Contenido".
+        4. A main content area that dynamically displays either the calendar grid or the content pillars as interactive cards.
+        5. A modal window for displaying the full details of a selected post (title, visual idea, copy, hashtags), triggered by clicking on a post from any view.
+        6. A dedicated, collapsible section for "Ideas para Stories y Reels".
+        This structure was chosen because a social media plan is non-linear. Users (e.g., a manager) need to see the schedule (Calendar View) but also understand the strategic distribution of topics (Pillar View). The modal prevents clutter and allows for easy deep-dives into content specifics.
+    -->
+    <!-- 
+        Visualization & Content Choices:
+        - Report Info: Post counts per pillar -> Goal: Compare proportions -> Viz/Method: Donut Chart (Chart.js). Justification: Provides a quick, visual understanding of the content strategy balance.
+        - Report Info: Schedule of all posts -> Goal: Organize by time -> Viz/Method: Interactive Calendar Grid (HTML/CSS Grid + JS). Justification: The most intuitive way to visualize a monthly schedule. Interaction: Clickable posts.
+        - Report Info: Grouped posts by theme -> Goal: Organize by theme/category -> Viz/Method: Interactive Cards (HTML/CSS Flexbox + JS). Justification: Allows users to focus on specific content strategies (e.g., "what are all our security posts?"). Interaction: Clickable posts.
+        - Report Info: Full post details (copy, visual idea) -> Goal: Inform/Drill-down -> Viz/Method: Modal Window (JS). Justification: Keeps the main interface clean while providing easy access to detailed information on demand.
+        - Report Info: Unscheduled ideas (Stories/Reels) -> Goal: Organize/Inform -> Viz/Method: Collapsible Accordion (HTML/JS). Justification: Separates evergreen ideas from the main, dated content plan in a space-efficient manner.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: #121212;
+            color: #F1F1F1;
+        }
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        .aliara-orange { color: #F85A40; }
+        .aliara-yellow { color: #F9A826; }
+        .bg-aliara-surface { background-color: #1E1E1E; }
+        .bg-aliara-surface-light { background-color: #2A2A2A; }
+        .border-aliara-orange { border-color: #F85A40; }
+        .border-aliara-yellow { border-color: #F9A826; }
+        .bg-aliara-orange { background-color: #F85A40; }
+        .bg-aliara-yellow { background-color: #F9A826; }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
+        .calendar-day {
+            transition: all 0.2s ease-in-out;
+        }
+        .calendar-day.has-reel {
+            cursor: pointer;
+        }
+        .calendar-day.has-reel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(248, 90, 64, 0.5);
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- CAPA DE ACCESO CON CONTRASEÑA -->
+    <div id="password-overlay" class="fixed inset-0 bg-black bg-opacity-95 z-[100] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="bg-aliara-surface-light p-8 rounded-xl text-center shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 aliara-orange">Ingresa el Código de Acceso</h2>
+            <p class="text-gray-400 mb-6">Este contenido es privado. Por favor, introduce el código para ver el plan.</p>
+            <div class="flex justify-center space-x-2">
+                <input id="password-input" type="password" maxlength="4" class="w-48 h-12 text-2xl text-center tracking-[0.5em] bg-gray-800 text-white rounded-md border-aliara-orange focus:ring focus:ring-aliara-orange" autofocus>
+            </div>
+            <p id="error-message" class="text-red-500 mt-4 hidden">Código incorrecto. Intenta de nuevo.</p>
+        </div>
+    </div>
+    <!-- FIN DE LA CAPA DE ACCESO -->
+
+    <header class="bg-aliara-surface py-6">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold aliara-orange">Plan de Contenido Interactivo</h1>
+            <p class="text-xl text-gray-300 mt-2 font-poppins">AliaraIT - Septiembre 2025</p>
+            <p class="text-xl text-gray-300 mt-2 font-poppins"><a href="AliaraIT_2025_AGO.html">Plan mes anterior</a></p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="overview" class="mb-8 p-6 bg-aliara-surface rounded-xl shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-center aliara-yellow">Resumen del Mes</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-aliara-surface-light p-4 rounded-lg">
+                        <p class="text-4xl font-bold" id="total-reels">0</p>
+                        <p class="text-gray-400">Reels Planificados</p>
+                    </div>
+                    <div class="bg-aliara-surface-light p-4 rounded-lg">
+                        <p class="text-4xl font-bold" id="total-pillars">0</p>
+                        <p class="text-gray-400">Pilares de Contenido</p>
+                    </div>
+                     <div class="bg-aliara-surface-light p-4 rounded-lg">
+                        <p class="text-4xl font-bold" id="total-stories">0</p>
+                        <p class="text-gray-400">Ideas de Stories</p>
+                    </div>
+                    <div class="bg-aliara-surface-light p-4 rounded-lg">
+                        <p class="text-4xl font-bold" id="total-reels-ideas">0</p>
+                        <p class="text-gray-400">Ideas de Reels</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="pillarsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="flex justify-center space-x-4 mb-8">
+            <button id="view-calendar-btn" class="bg-aliara-orange text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-opacity-80 transition">Vista Calendario</button>
+            <button id="view-pillars-btn" class="bg-aliara-yellow text-gray-900 font-bold py-2 px-6 rounded-lg shadow-md hover:bg-opacity-80 transition">Vista por Pilares</button>
+        </div>
+
+        <section id="calendar-view" class="bg-aliara-surface p-6 rounded-xl shadow-lg">
+            <div class="grid grid-cols-7 text-center font-bold text-gray-400 mb-2">
+                <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+            </div>
+            <div id="calendar-grid" class="calendar-grid gap-2"></div>
+        </section>
+
+        <section id="pillars-view" class="hidden">
+             <div id="pillars-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+        
+        <section id="extra-ideas" class="mt-12">
+            <h2 class="text-3xl font-bold text-center mb-6 aliara-yellow">Ideas Adicionales</h2>
+            <div class="space-y-4">
+                <div class="accordion-item bg-aliara-surface rounded-xl overflow-hidden">
+                    <button class="accordion-header w-full text-left p-4 font-bold text-xl flex justify-between items-center">
+                        <span>💡 Ideas para Instagram Stories</span>
+                        <span class="transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4">
+                        <ul id="stories-list" class="list-disc list-inside text-gray-300 space-y-2"></ul>
+                    </div>
+                </div>
+                <div class="accordion-item bg-aliara-surface rounded-xl overflow-hidden">
+                    <button class="accordion-header w-full text-left p-4 font-bold text-xl flex justify-between items-center">
+                        <span>🎬 Ideas para Instagram Reels</span>
+                         <span class="transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4">
+                        <ul id="reels-list" class="list-disc list-inside text-gray-300 space-y-2"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="post-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 opacity-0 pointer-events-none z-50">
+        <div class="bg-aliara-surface-light w-full max-w-2xl rounded-2xl shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+            <div class="p-6 border-b border-gray-700">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 id="modal-title" class="text-2xl font-bold aliara-orange"></h3>
+                        <p id="modal-date" class="text-sm text-gray-400"></p>
+                    </div>
+                    <button id="close-modal-btn" class="text-3xl text-gray-500 hover:text-white">&times;</button>
+                </div>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto">
+                <div class="mb-6">
+                    <h4 class="font-bold text-lg mb-2 aliara-yellow">🎨 Idea Visual</h4>
+                    <p id="modal-visual" class="text-gray-300"></p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2 aliara-yellow">✍️ Copy del Post</h4>
+                    <p id="modal-copy" class="text-gray-300 whitespace-pre-wrap font-poppins"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Lógica para la capa de contraseña
+            const passwordOverlay = document.getElementById('password-overlay');
+            const passwordInput = document.getElementById('password-input');
+            const errorMessage = document.getElementById('error-message');
+            const correctPassword = '2025'; // ⚠️ CAMBIA ESTA CONTRASEÑA POR LA QUE DESEES ⚠️
+
+            // Funcionalidad para verificar la contraseña al completar los 4 dígitos
+            passwordInput.addEventListener('input', () => {
+                errorMessage.classList.add('hidden');
+                if (passwordInput.value.length === 4) {
+                    checkPassword();
+                }
+            });
+
+            function checkPassword() {
+                if (passwordInput.value === correctPassword) {
+                    passwordOverlay.classList.add('opacity-0', 'pointer-events-none');
+                    // Opcional: limpiar el campo después de un acceso exitoso
+                    passwordInput.value = '';
+                } else {
+                    errorMessage.classList.remove('hidden');
+                    passwordInput.value = '';
+                }
+            }
+
+            const reelsContent = [
+                { date: '2025-09-03', pillar: 'Reel Institucional', title: 'AliaraIT: Tu Tecnología, Siempre On.', visual: 'Reel de 30 segundos con las escenas del guion publicitario, mostrando la transición de un problema (confusión, frustración) a una solución (trabajo en equipo, tranquilidad) y culminando con los servicios y el logo de la empresa.', copy: 'En un mundo donde la tecnología no puede detenerse, necesitás un aliado que entienda tus desafíos. En AliaraIT, nos unimos a tu empresa para asegurar que tu tecnología siempre esté activa, segura y eficiente. Somos más que un servicio, somos tu socio tecnológico de confianza. ¡Activá la tecnología! 🚀 #AliaraIT #AliadoTecnologico #SolucionesIT #ContinuidadOperativa #TecnologiaParaEmpresas' },
+                { date: '2025-09-10', pillar: 'Reel', title: 'La clave de la confianza', visual: 'Infografía con un icono de candado o un apretón de manos, y un texto que diga: "Compromiso + Experiencia = Confianza".', copy: 'La confianza no se regala, se construye. En AliaraIT, la construimos con experiencia, conocimiento y un compromiso real con cada proyecto. Por eso, somos el socio tecnológico que te da la tranquilidad que tu negocio necesita para crecer. 🤝 #ConfianzaIT #AliaraIT #Compromiso #ExpertiseTecnico' },
+                { date: '2025-09-17', pillar: 'Reel', title: 'Más que un gasto, una inversión', visual: 'Ilustración de una gráfica de crecimiento con una flecha hacia arriba o un icono de un billete.', copy: 'Invertir en tecnología no es un gasto, es la inversión más inteligente para el futuro de tu empresa. Con soluciones IT robustas, ganás eficiencia, seguridad y escalabilidad para competir en el mercado actual. ¿Estás listo para invertir en tu crecimiento? 📈 #InversionEnTecnologia #CrecimientoEmpresarial #ITparaEmpresas #TransformacionDigital #AliaraIT' },
+                { date: '2025-09-24', pillar: 'Reel', title: 'Soluciones a medida', visual: 'Un rompecabezas con una pieza que encaja perfectamente.', copy: 'Cada empresa es única y merece soluciones a su medida. En AliaraIT, no ofrecemos paquetes prefabricados. Analizamos tus necesidades para crear una estrategia tecnológica que encaje perfecto con tu negocio y te ayude a alcanzar tus objetivos. 🧩 #SolucionesAMedida #ITConsulting #ConsultoriaTecnologica #AliaraIT' }
+            ];
+
+            let contentPlan = reelsContent;
+            
+            const storiesIdeas = [
+                { date: '2025-09-02', pillar: 'Gestión de Redes', copy: '¿Problemas de Wi-Fi en tu oficina? 😩 ¡Tenemos la solución! En AliaraIT, nos encargamos de que tu red sea la más estable y rápida. Conectate con nuestra ayuda.', visual: 'Una ilustración de una oficina con una señal de Wi-Fi débil y en rojo, que luego cambia a una señal fuerte y en verde.' },
+                { date: '2025-09-05', pillar: 'Servidores', copy: '¿Te preocupa dónde se aloja tu información? 🤔 Nuestros expertos te garantizan un rendimiento óptimo y un lugar seguro para todos tus datos. Contáctanos y asegura la información más importante de tu empresa.', visual: 'Ilustración de un icono de nube con candado y textos de "datos seguros" flotando alrededor.' },
+                { date: '2025-09-08', pillar: 'Seguridad Informática', copy: 'Las amenazas digitales existen, ¡pero no tienen que afectarte! 🔒 Protegé tu negocio de virus, phishing y más. Con nuestras soluciones, mantén tu información segura y a tu equipo preparado para cualquier amenaza. Conocé más.', visual: 'Animación de un escudo deteniendo múltiples virus y amenazas digitales representados por iconos.' },
+                { date: '2025-09-12', pillar: 'Soporte Técnico', copy: '¿Un equipo que no funciona? 🛠️ ¡No pierdas tiempo ni productividad! Nuestro equipo de soporte técnico te asiste en todo, desde hardware a software, para que tu negocio nunca pare.', visual: 'Gráfico animado de una persona frustrada frente a un ordenador averiado, que luego sonríe mientras un técnico de soporte aparece resolviendo el problema.' },
+                { date: '2025-09-15', pillar: 'Gestión de Redes', copy: 'Hacemos que tu red vuele. Con nuestro servicio de gestión, tu negocio alcanzará un nuevo nivel de productividad. ¡Confía en los expertos!', visual: 'Representación visual de una red de internet con un avión de papel volando a través de ella, simbolizando velocidad.' },
+                { date: '2025-09-19', pillar: 'Servidores', copy: 'Mantén tus sistemas funcionando sin interrupciones. Con nuestros servidores, te aseguramos la continuidad operativa para que tu negocio siga creciendo. ¡La confianza es nuestra prioridad!', visual: 'Ilustración de servidores funcionando con un ritmo constante, con un gráfico de crecimiento que se eleva sobre ellos.' },
+                { date: '2025-09-22', pillar: 'Seguridad Informática', copy: 'Tu negocio está expuesto a miles de amenazas cada día. No te arriesgues. Con nuestras soluciones de ciberseguridad, tu empresa está protegida. Descubre cómo.', visual: 'Visual de un firewall digital, representado como un muro de protección, deteniendo íconos de amenazas y hackers.' },
+                { date: '2025-09-26', pillar: 'Soporte Técnico', copy: 'Nuestro equipo de soporte está siempre listo para ayudarte a resolver cualquier problema. ¡Estamos a un solo clic de distancia! #SoporteTecnico', visual: 'Icono de un teléfono o un chat con un pulgar hacia arriba, sobre un fondo de iconos de herramientas de soporte técnico.' },
+                { date: '2025-09-29', pillar: 'Llamada a la Acción', copy: '¿Listo para unirte a la alianza? Te ayudamos a optimizar tu negocio. Contáctanos por WhatsApp y hablemos sobre tu proyecto.', visual: 'Animación de dos manos dándose un apretón de manos, con el logo de WhatsApp en el fondo.' }
+            ];
+
+            const calendarGrid = document.getElementById('calendar-grid');
+            const pillarsGrid = document.getElementById('pillars-grid');
+            const modal = document.getElementById('post-modal');
+            const modalContent = document.getElementById('modal-content');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            
+            function openModal(post) {
+                document.getElementById('modal-title').textContent = post.title || post.pillar;
+                document.getElementById('modal-date').textContent = post.date ? new Date(post.date + 'T00:00:00').toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+                document.getElementById('modal-visual').textContent = post.visual || 'N/A';
+                document.getElementById('modal-copy').textContent = post.copy || 'N/A';
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95');
+            }
+
+            function closeModal() {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modalContent.classList.add('scale-95');
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            function renderCalendar() {
+                calendarGrid.innerHTML = '';
+                const year = 2025;
+                const month = 8; // September is month 8 in JS (0-indexed)
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) {
+                    calendarGrid.innerHTML += `<div class="border border-gray-800 p-2 h-24 md:h-32 rounded-md"></div>`;
+                }
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    const post = contentPlan.find(p => p.date === dateStr);
+                    const stories = storiesIdeas.filter(p => p.date === dateStr);
+
+                    let dayCell = `<div class="calendar-day border border-gray-800 p-2 h-24 md:h-32 rounded-md bg-aliara-surface-light flex flex-col justify-between"><div>${day}</div><div class="space-y-1">`;
+                    if (post) {
+                        dayCell = dayCell.replace('class="calendar-day', 'class="calendar-day has-reel');
+                        dayCell += `<div data-date="${dateStr}" class="bg-aliara-orange text-white text-xs font-bold p-1 rounded-md truncate">REEL</div>`;
+                    }
+                    if (stories.length > 0) {
+                         stories.forEach((story, index) => {
+                            dayCell += `<div data-index="${storiesIdeas.indexOf(story)}" class="has-story bg-green-500 text-white text-xs font-bold p-1 rounded-md truncate cursor-pointer">STORY ${index + 1}</div>`;
+                         });
+                    }
+                    dayCell += `</div></div>`;
+                    calendarGrid.innerHTML += dayCell;
+                }
+                
+                const lastDayOfMonth = new Date(year, month, daysInMonth);
+                const remainingCells = 7 - (lastDayOfMonth.getDay() + 1);
+                if(remainingCells < 7) {
+                    for (let i = 0; i < remainingCells; i++) {
+                        calendarGrid.innerHTML += `<div class="border border-gray-800 p-2 h-24 md:h-32 rounded-md"></div>`;
+                    }
+                }
+                
+                document.querySelectorAll('.has-reel').forEach(cell => {
+                    cell.addEventListener('click', (e) => {
+                        const postDate = e.currentTarget.querySelector('[data-date]').dataset.date;
+                        const post = contentPlan.find(p => p.date === postDate);
+                        if (post) openModal(post);
+                    });
+                });
+                
+                document.querySelectorAll('.has-story').forEach(cell => {
+                    cell.addEventListener('click', (e) => {
+                        const storyIndex = e.currentTarget.dataset.index;
+                        const story = storiesIdeas[storyIndex];
+                        if (story) {
+                            openModal({
+                                title: `Story: ${story.pillar}`,
+                                visual: story.visual, 
+                                copy: story.copy,
+                                date: story.date
+                            });
+                        }
+                    });
+                });
+            }
+            
+            function renderPillars() {
+                pillarsGrid.innerHTML = '';
+                const allContent = [...contentPlan, ...storiesIdeas.map(s => ({...s, pillar: s.pillar + ' (Stories)'}))];
+                const pillars = [...new Set(allContent.map(p => p.pillar).filter(p => p))];
+                
+                pillars.forEach(pillar => {
+                    const pillarPosts = allContent.filter(p => p.pillar === pillar);
+                    const pillarCard = document.createElement('div');
+                    pillarCard.className = 'bg-aliara-surface p-6 rounded-xl shadow-lg flex flex-col h-full';
+                    
+                    let postsHTML = pillarPosts.map(post => `
+                        <div class="pillar-post bg-aliara-surface-light p-3 rounded-lg mb-2 cursor-pointer hover:bg-opacity-70" data-date="${post.date}">
+                            <h4 class="font-bold truncate">${post.title || post.copy.split('.')[0] || post.pillar}</h4>
+                            <p class="text-sm text-gray-400">${post.date ? new Date(post.date + 'T00:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'long' }) : 'Generado'}</p>
+                        </div>
+                    `).join('');
+                    
+                    pillarCard.innerHTML = `
+                        <h3 class="text-2xl font-bold mb-4 aliara-yellow">${pillar}</h3>
+                        <div class="space-y-2 flex-grow">${postsHTML}</div>
+                    `;
+                    pillarsGrid.appendChild(pillarCard);
+                });
+
+                document.querySelectorAll('.pillar-post').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const postDate = e.currentTarget.dataset.date;
+                        const post = allContent.find(p => p.date === postDate);
+                        if (post) openModal(post);
+                    });
+                });
+            }
+
+            function renderPillarChart() {
+                const allContent = [...contentPlan, ...storiesIdeas];
+                const pillarCounts = allContent.reduce((acc, post) => {
+                    const pillarName = post.pillar.split(' ')[0];
+                    if (pillarName) {
+                        acc[pillarName] = (acc[pillarName] || 0) + 1;
+                    }
+                    return acc;
+                }, {});
+
+                const pillarData = {
+                    labels: Object.keys(pillarCounts),
+                    datasets: [{
+                        data: Object.values(pillarCounts),
+                        backgroundColor: ['#F85A40', '#F9A826', '#03A9F4', '#4CAF50', '#9C27B0', '#FF9800', '#E91E63', '#3F51B5'],
+                        borderColor: '#1E1E1E',
+                        borderWidth: 2
+                    }]
+                };
+
+                const ctx = document.getElementById('pillarsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: pillarData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    color: '#F1F1F1',
+                                    font: {
+                                        family: "'Jost', sans-serif"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updateStats() {
+                document.getElementById('total-reels').textContent = contentPlan.length;
+                document.getElementById('total-pillars').textContent = [...new Set(contentPlan.map(p => p.pillar))].length;
+                document.getElementById('total-stories').textContent = storiesIdeas.length;
+                
+            }
+
+            function populateExtraIdeas() {
+                const storiesList = document.getElementById('stories-list');
+                storiesIdeas.forEach(idea => {
+                    const li = document.createElement('li');
+                    li.textContent = `(${idea.date}) ${idea.copy}`;
+                    storiesList.appendChild(li);
+                });
+            }
+            
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('span:last-child');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                        document.querySelectorAll('.accordion-header span:last-child').forEach(i => i.style.transform = 'rotate(0deg)');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            const calendarView = document.getElementById('calendar-view');
+            const pillarsView = document.getElementById('pillars-view');
+            const calendarBtn = document.getElementById('view-calendar-btn');
+            const pillarsBtn = document.getElementById('view-pillars-btn');
+
+            calendarBtn.addEventListener('click', () => {
+                calendarView.classList.remove('hidden');
+                pillarsView.classList.add('hidden');
+                calendarBtn.classList.add('bg-aliara-orange', 'text-white');
+                calendarBtn.classList.remove('bg-gray-600');
+                pillarsBtn.classList.remove('bg-aliara-orange', 'text-white');
+                pillarsBtn.classList.add('bg-aliara-yellow', 'text-gray-900');
+            });
+
+            pillarsBtn.addEventListener('click', () => {
+                pillarsView.classList.remove('hidden');
+                calendarView.classList.add('hidden');
+                pillarsBtn.classList.add('bg-aliara-orange', 'text-white');
+                pillarsBtn.classList.remove('bg-aliara-yellow', 'text-gray-900');
+                calendarBtn.classList.remove('bg-aliara-orange', 'text-white');
+                calendarBtn.classList.add('bg-gray-600');
+            });
+
+            updateStats();
+            renderPillarChart();
+            renderCalendar();
+            renderPillars();
+            populateExtraIdeas();
+            calendarBtn.click();
+        });
+    </script>
+</body>
+</html>

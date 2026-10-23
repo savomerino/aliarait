@@ -1,0 +1,33 @@
+# Aliara IT
+
+> Socio tecnológico de empresas. Diseña, protege y mantiene la infraestructura IT para que la operación no se detenga. El nombre viene del latín "alligare": unir y vincular.
+
+Aliara IT trabaja con empresas que necesitan redes estables, servidores cuidados, seguridad informática y soporte técnico de hardware y software. La base está en Resistencia, Chaco, Argentina, y atiende de forma remota y presencial.
+
+Este archivo es la ficha para agentes y modelos de lenguaje. El detalle extendido está en [llms-full.txt](https://aliarait.com/llms-full.txt). El sitio público es una sola página: https://aliarait.com
+
+## Servicios
+
+- [Gestión de Redes](https://aliarait.com/#services): redes Ubiquiti, cableado estructurado y organización de racks.
+- [Servidores](https://aliarait.com/#services): instalación, configuración y mantenimiento de servidores físicos y virtuales.
+- [Seguridad Informática](https://aliarait.com/#services): firewalls, antivirus centralizado y políticas de seguridad.
+- [Soporte Técnico](https://aliarait.com/#services): asistencia remota y presencial de hardware y software.
+
+## Propósito
+
+- Misión: soluciones expertas en redes, servidores, seguridad y soporte, con eficiencia y continuidad operativa.
+- Visión: ser referente en infraestructura IT por confiabilidad, conocimiento técnico y compromiso con el cliente.
+- Valores: compromiso, confianza, crecimiento colaborativo y cercanía.
+- Enfoque: anticipar problemas, no solo repararlos. Aliara IT actúa como equipo de IT extendido.
+
+## Contacto
+
+- Sitio: https://aliarait.com
+- Email: info@aliarait.com
+- Teléfono y WhatsApp: +54 9 362 421-5757
+- Ubicación: Resistencia, Chaco, Argentina
+- Consultas: https://aliarait.com/#contact
+
+## Qué no indexar
+
+Las rutas /rrss, /mailing y /api son herramientas internas (planes de contenido y plantillas). No describen la oferta pública.

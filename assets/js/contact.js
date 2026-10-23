@@ -27,8 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('name').focus();
         return;
       }
-      var text = encodeURIComponent('Nombre: ' + name + '\nMensaje: ' + message);
-      var phone = '5493624215757'; 
+      var phone = '5493624215757';
+      var email = (document.getElementById('email') && document.getElementById('email').value.trim()) || '';
+      var text = encodeURIComponent('Consulta Aliara IT\nNombre: ' + name + '\nEmail: ' + (email || '-') + '\nMensaje: ' + message);
       window.open('https://wa.me/' + phone + '?text=' + text, '_blank');
     });
   }
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
       submitButton.disabled = true;
       submitButton.textContent = 'Enviando...';
 
-      fetch('https://formspree.io/f/mblyoqyl', {
+      fetch('/api/contact', {
         method: 'POST',
         body: formData,
         headers: { 'Accept': 'application/json' }
